@@ -1,0 +1,31 @@
+@model WebCadeteria.ViewModels.ClienteViewModel
+@{
+    ViewData["Title"] = "Alta Cliente";
+}
+<h4>ALTA CLIENTE: </h4>
+<form asp-controller="Cliente" asp-action= "CargarCliente" method="POST">
+    <label asp-for="@Model.Nombre">Nombre: 
+        <input asp-for="@Model.Nombre" placeholder="Ej: Juanito">
+        <span asp-validation-for="@Model.Nombre"></span>
+    </label>
+
+    <label asp-for="@Model.Direccion">Direccion: 
+        <input asp-for="@Model.Direccion" placeholder="Ej: Av. Independencia 1900">
+        <span asp-validation-for="@Model.Direccion"></span>
+    </label>
+
+    <label asp-for="@Model.Telefono">Telefono: 
+        <input asp-for="@Model.Telefono" placeholder="Ej: 4256162">
+        <span asp-validation-for="@Model.Telefono"></span>
+    </label>
+
+    <label asp-for="@Model.DatosReferenciaDireccion">Datos de referencia de direccion: 
+        <input asp-for="@Model.DatosReferenciaDireccion" placeholder="Ej: Entre Colon y Alem">
+        <span asp-validation-for="@Model.DatosReferenciaDireccion"></span>
+    </label>
+    <fieldset>
+        <button>Enviar</button>
+    </fieldset>
+</form>
+
+@section Scripts { <partial name = "_ValidationScriptsPartial" /> } 

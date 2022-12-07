@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Editar cadete";
+}
+
+@model WebCadeteria.ViewModels.CadeteViewModel
+
+<div>
+    <form asp-controller="Cadete" asp-action="ModificarCadete" method="post">
+        <label asp-for="@Model.Nombre">Nombre:
+            <input asp-for="@Model.Nombre" placeholder="Ingrese el nombre">
+            <span asp-validation-for="@Model.Nombre"></span>
+        </label>
+        
+        <label asp-for="@Model.Direccion">Direccion: 
+            <input asp-for="@Model.Direccion" placeholder="Ej: Av. Independencia 1900">
+            <span asp-validation-for="@Model.Direccion"></span>
+        </label>
+
+        <label asp-for="@Model.Telefono">Telefono: 
+            <input asp-for="@Model.Telefono" placeholder="Ej: 4256162">
+            <span asp-validation-for="@Model.Telefono"></span>
+        </label>
+                
+        <fieldset>
+            <button>Modificar</button>
+        </fieldset>
+    </form>
+</div>
+            
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

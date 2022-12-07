@@ -1,0 +1,165 @@
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+  font-size: 14px;
+}
+
+body {
+  background-color: white;
+}
+nav{
+  background-color:grey;
+  height: 7vh;
+  width: 45vw;
+  margin: auto 1rem;
+  padding:auto;
+  font-size: 1.3rem;
+}
+nav ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly; 
+  align-items: left;
+  height: 7vh;
+  list-style: none;
+  padding: 1em;
+}
+nav a{
+  text-decoration: none;
+  color:rgb(180, 21, 21);
+  font-size: 1.5rem;
+}
+
+header{
+  background-color:grey;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  padding: auto;
+}
+
+header h1{
+  font-size: 1.8rem;
+  padding-top: 1.2rem;
+  padding-left: 1rem;
+}
+h4{
+  font-size: 1.8rem;
+  margin-top: 1em;
+  padding: auto;
+}
+form{
+  background-color: grey;
+  margin: 2rem auto;
+  padding: 3rem;
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  border: #2c2e2e;
+  border-style: solid;
+}
+form label{
+  padding: 1rem;
+  width: 90vw;
+}
+form button{
+  padding: 1rem;
+}
+input{
+  margin-left: 1rem;
+  padding: 1rem;
+  width: 20vw;
+}
+
+main{
+  width: 100%;
+  height: 80vh;
+  background-color: white;
+  text-align: justify;
+  color: black;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1.2rem;
+}
+main p{
+  padding-top: 0.5rem;
+}
+main h2{
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+}
+
+main h3{
+  padding-top: 3rem;
+  padding-bottom: 0.5rem;
+}
+
+table{
+  width: 90%;
+  margin: 1rem auto;
+  border-collapse:collapse;
+  text-align: center;
+  background-color: #9a9a9a;
+}
+table caption{
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+thead{
+  background-color: #a70000;
+  color:rgb(255, 255, 255);
+}
+td,th{
+  border: 2px solid black;
+  padding: 0.5rem;
+}
+td{
+  vertical-align: middle;
+}
+td p{
+  text-align: justify;
+  padding: 0.5rem;
+}
+td figure{
+  width: 8rem;
+  padding-left: 1rem;
+}
+img{
+  width: 100%;
+}
+figcaption{
+  text-align: center;
+  font-style: oblique;
+  font-size: 1.1rem;
+}
+footer{
+  background-color:grey;
+  height: 10vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  vertical-align: middle;
+  color: black;
+}
+footer p{
+  color:black;
+  font-family:'Arial Narrow Bold', sans-serif;
+  font-size: 1.5rem;
+  text-decoration: none;
+}

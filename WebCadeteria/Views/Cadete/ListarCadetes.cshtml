@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Listar Cadetes";
+}
+
+<div class="text-center">
+    <h2>Cadetes en el sistema</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Telefono</th>
+                <th>Eliminar</th>
+                <th>Modificar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                string path = @"Recursos\cadetes.csv";
+                
+                string[]leer = System.IO.File.ReadAllLines(path);
+            }
+            @foreach (string item in leer)
+            {
+                string[]linea = item.Split(";");
+                <TR>
+                    <TD>@linea[0]</TD>
+                    <TD>@linea[1]</TD>
+                    <TD>@linea[2]</TD>
+                    <TD>@linea[3]</TD>
+
+                    <TD>
+                        <a href="@Url.Action("BajarCadete","Cadete", new { id = linea[0] } )">
+                            Eliminar
+                        </a>   
+                    </TD>
+
+                    <TD> 
+                        <a href="@Url.Action("ModificarCadete","Cadete", new { id = linea[0] } )">
+                            Modificar
+                        </a>       
+                    </TD>
+                </TR>
+            }
+    </table>
+    
+    
+</div>

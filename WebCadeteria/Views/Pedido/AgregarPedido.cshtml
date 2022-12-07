@@ -1,0 +1,27 @@
+@model WebCadeteria.ViewModels.PedidoViewModel
+@{
+    ViewData["Title"] = "Alta Pedido";
+}
+<h4>ALTA PEDIDO: </h4>
+<form asp-controller="Pedido" asp-action= "AgregarPedido" method="POST">
+    <label asp-for="@Model.Obs">Observacion: 
+        <input asp-for="@Model.Obs" placeholder="Ingrese observacion: ">
+        <span asp-validation-for="@Model.Obs"></span>
+    </label>
+
+    <label asp-for="@Model.Estado">Estado: 
+        <input asp-for="@Model.Estado" placeholder="Ej: en preparacion">
+        <span asp-validation-for="@Model.Estado"></span>
+    </label>
+
+    <label asp-for="@Model.Cliente">Telefono del cliente: 
+        <input asp-for="@Model.Cliente" placeholder="Ej: 4356339">
+        <span asp-validation-for="@Model.Cliente"></span>
+    </label>
+
+    <fieldset>
+        <button>Enviar</button>
+    </fieldset>
+</form>
+
+@section Scripts { <partial name = "_ValidationScriptsPartial" /> } 
