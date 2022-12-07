@@ -9,23 +9,20 @@ namespace WebCadeteria.Controllers{
     public class ClienteController : Controller
     {
 
-        private string path_clientes = @"Recursos\clientes.csv";
-        private Cadeteria _cadeteria = new Cadeteria();
-        private Helper _helper = new Helper();
-
         private readonly ILogger<HomeController> _logger;
 
         private readonly IMapper _mapper;
+        private readonly ICliente _repository;
 
-        public ClienteController(ILogger<HomeController> logger, IMapper mapper)
+        public ClienteController(ILogger<HomeController> logger, IMapper mapper, ICliente repository)
         {
             _logger = logger;
             _mapper = mapper;
-            _helper.leerClientes(path_clientes, _cadeteria.ListadoClientes);
+            _repository = repository;
         }
         public IActionResult Index()
         {
-            return View();
+            return View("ListarClientes", _repository.FindAll());
         }
 
         public IActionResult CargarCliente()
@@ -35,12 +32,11 @@ namespace WebCadeteria.Controllers{
         [HttpPost]
         public IActionResult CargarCliente(ClienteViewModel _clienteVM)
         {
-            int id_actual = _cadeteria.ListadoClientes.Count();
             if(ModelState.IsValid){         
                 Cliente cli = _mapper.Map<Cliente>(_clienteVM);
-                System.IO.File.AppendAllText(path_clientes, $"{id_actual};{cli.Nombre};{cli.Direccion};{cli.Telefono};{cli.DatosReferenciaDireccion}\n");
-                _cadeteria.ListadoClientes.Add(cli);
-                return View("ListarClientes");
+                _repository.Insert(cli);
+
+                return RedirectToAction("Index");
             }else{
                 return View();
             }
@@ -48,35 +44,20 @@ namespace WebCadeteria.Controllers{
 
         public IActionResult MostrarClientes()
         {
-            return View("ListarClientes");
+            return RedirectToAction("Index");
         }
         
 
-        public IActionResult BajarCadete(int id){
-            string[] leer = System.IO.File.ReadAllLines(path_clientes);
-            System.IO.File.WriteAllText(path_clientes,"");
-            
-            for (int i = 0; i < leer.Length; i++){
-                string[] datos = leer[i].Split(";");
-                if (id == Convert.ToInt32(datos[0])){   
-                    _cadeteria.ListadoClientes.RemoveAt(id);
-
-                    for(int j = id-1; j < leer.Length -2; j++){ //length -2 porque ya hice un remove y se resta 1, y porque adentro hago j+1 para que nose se pase del rango
-                        System.IO.File.AppendAllText(path_clientes, $"{j+1};{ _cadeteria.ListadoClientes[j+1].Nombre};{ _cadeteria.ListadoClientes[j+1].Direccion};{ _cadeteria.ListadoClientes[j+1].Telefono};{ _cadeteria.ListadoClientes[j+1].DatosReferenciaDireccion}" + "\n");
-                    }
-                    break;
-                }else{
-                    System.IO.File.AppendAllText(path_clientes, leer[i] +"\n");  
-                } 
-            }
-
-            return View("ListarClientes");
+        public IActionResult BajarCliente(int id){
+           
+            _repository.Delete(id);
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult ModificarCliente(int id)
         {   
-            Cliente cli = _cadeteria.ListadoClientes[id];
+            Cliente cli = _repository.FindById(id);
             ClienteViewModel _clienteVM = _mapper.Map<ClienteViewModel>(cli);
             return View(_clienteVM);
         }
@@ -84,22 +65,15 @@ namespace WebCadeteria.Controllers{
         [HttpPost]
         public IActionResult ModificarCliente(ClienteViewModel _clienteVM)
         {
-            Cliente cli = _mapper.Map<Cliente>(_clienteVM);
-            _cadeteria.ListadoClientes[cli.Id] = cli;
+           if(ModelState.IsValid){
+                
+                Cliente cli = _mapper.Map<Cliente>(_clienteVM);
+                _repository.Update(cli);
 
-            string[] leer = System.IO.File.ReadAllLines(path_clientes);
-            System.IO.File.WriteAllText(path_clientes,"");
-            
-
-            for (int i = 0; i < leer.Length; i++){
-                string[] datos = leer[i].Split(";");
-                if (cli.Id == Convert.ToInt32(datos[0])){   
-                    System.IO.File.AppendAllText(path_clientes, $"{cli.Id};{cli.Nombre};{cli.Direccion};{cli.Telefono};{cli.DatosReferenciaDireccion}" + "\n");
-                }else{
-                    System.IO.File.AppendAllText(path_clientes, leer[i] +"\n");  
-                } 
+                return RedirectToAction("Index");
+            }else{
+                return View();
             }
-            return View("ListarClientes");
         }
 
 

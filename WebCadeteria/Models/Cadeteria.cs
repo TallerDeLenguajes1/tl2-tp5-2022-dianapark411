@@ -25,50 +25,8 @@ namespace WebCadeteria.Models{
             ListadoPedidos= new List<Pedido>();
             ListadoClientes= new List<Cliente>();
 
-            _helper.leerCadetes(path_cadetes, ListadoCadetes);
-            _helper.leerClientes(path_clientes, ListadoClientes);
-
-            StreamReader file = new StreamReader(path_pedidos);
-            string line = "";
-            //Lee linea por linea hasta que termina el archivo
-            while ((line = file.ReadLine()) != null)
-            {
-                string[] Fila = line.Split(';');
-                Cliente cli;
-                bool encontrado;
-                (cli,encontrado) = buscarCliente(Fila[3]);
-                if(encontrado){
-                    ListadoPedidos.Add(new Pedido(Convert.ToInt32(Fila[0]), Fila[1], Fila[2], cli));
-                }
-                // agregar un else que si no lo encuentre mande a cargar cliente           
-            }
-            file.Close();
         }
 
-        public (Cliente, bool) buscarCliente(string _telefono){
-
-            int id = 99999;
-            bool encontrado = false;
-            for (int i = 0; i < listadoClientes.Count(); i++){
-                if (listadoClientes[i].Telefono == Convert.ToInt64(_telefono)){
-                    id = i;
-                    encontrado = true;
-                }
-            }
-
-            return (listadoClientes[id], encontrado);
-        }
-
-
-        public void mostrarCadeteria(){
-            Console.WriteLine("INFORMACION DE LA CADETERIA: ");
-            Console.WriteLine("NOMBRE: ", Nombre);
-            Console.WriteLine("TELEFONO: ", Telefono_cadeteria);
-            foreach (var item in ListadoCadetes)
-            {
-                item.mostrarCadetes();
-            }
-        }
     }
 
 }

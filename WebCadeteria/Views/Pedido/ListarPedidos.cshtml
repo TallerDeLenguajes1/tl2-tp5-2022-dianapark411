@@ -2,6 +2,9 @@
     ViewData["Title"] = "Listar Pedidos";
 }
 
+@using WebCadeteria.ViewModels
+@model List<PedidoViewModel>
+
 <div class="text-center">
     <h2>Pedidos en el sistema</h2>
     <table>
@@ -10,38 +13,32 @@
                 <th>Numero</th>
                 <th>Observacion</th>
                 <th>Estado</th>
-                <th>Telefono del cliente</th>
+                <th>Cliente</th>
+                <th>Cadete</th>
                 <th>Eliminar</th>
                 <th>Modificar</th>
             </tr>
         </thead>
         <tbody>
-            @{
-                string path = @"Recursos\pedidos.csv";
-                
-                string[]leer = System.IO.File.ReadAllLines(path);
-            }
-            @foreach (string item in leer)
+            @foreach (var pedido in Model)
             {
-                string[]linea = item.Split(";");
-                <TR>
-                    <TD>@linea[0]</TD>
-                    <TD>@linea[1]</TD>
-                    <TD>@linea[2]</TD>
-                    <TD>@linea[3]</TD>
-
-                    <TD>
-                        <a href="@Url.Action("BajarPedido","Pedido", new { id = linea[0] } )">
+                <tr>
+                    <td>@pedido.Nro</td>
+                    <td>@pedido.Obs</td>
+                    <td>@pedido.Estado</td>
+                    <td>@pedido.Cliente</td>
+                    <td>@pedido.Cadete</td>
+                    <td>
+                        <a href="@Url.Action("BajarPedido","pedido", new { id = @pedido.Nro} )">
                             Eliminar
-                        </a>   
-                    </TD>
-
-                    <TD> 
-                        <a href="@Url.Action("ModificarPedido","Pedido", new { id = linea[0] } )">
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("ModificarPedido","pedido", new { id = @pedido.Nro} )">
                             Modificar
-                        </a>       
-                    </TD>
-                </TR>
+                        </a>     
+                    </td>
+                </tr>
             }
     </table>
     

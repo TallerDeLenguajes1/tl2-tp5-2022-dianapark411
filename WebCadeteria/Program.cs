@@ -1,9 +1,15 @@
 using AutoMapper;
+using WebCadeteria.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddTransient<ICadete, CadeteRepositorio>();
+builder.Services.AddTransient<ICliente, ClienteRepositorio>();
+builder.Services.AddTransient<IPedido, PedidoRepositorio>();
 
 var app = builder.Build();
 

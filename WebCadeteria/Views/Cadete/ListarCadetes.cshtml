@@ -2,6 +2,9 @@
     ViewData["Title"] = "Listar Cadetes";
 }
 
+@using WebCadeteria.ViewModels
+@model List<CadeteViewModel>
+
 <div class="text-center">
     <h2>Cadetes en el sistema</h2>
     <table>
@@ -16,34 +19,24 @@
             </tr>
         </thead>
         <tbody>
-            @{
-                string path = @"Recursos\cadetes.csv";
-                
-                string[]leer = System.IO.File.ReadAllLines(path);
-            }
-            @foreach (string item in leer)
+            @foreach (var cadete in Model)
             {
-                string[]linea = item.Split(";");
-                <TR>
-                    <TD>@linea[0]</TD>
-                    <TD>@linea[1]</TD>
-                    <TD>@linea[2]</TD>
-                    <TD>@linea[3]</TD>
-
-                    <TD>
-                        <a href="@Url.Action("BajarCadete","Cadete", new { id = linea[0] } )">
+                <tr>
+                    <td>@cadete.Id</td>
+                    <td>@cadete.Nombre</td>
+                    <td>@cadete.Direccion</td>
+                    <td>@cadete.Telefono</td>
+                    <td>
+                        <a href="@Url.Action("BajarCadete","Cadete", new { id = @cadete.Id } )">
                             Eliminar
-                        </a>   
-                    </TD>
-
-                    <TD> 
-                        <a href="@Url.Action("ModificarCadete","Cadete", new { id = linea[0] } )">
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("ModificarCadete","Cadete", new { id = @cadete.Id } )">
                             Modificar
-                        </a>       
-                    </TD>
-                </TR>
+                        </a>     
+                    </td>
+                </tr>
             }
-    </table>
-    
-    
+    </table>    
 </div>

@@ -2,6 +2,9 @@
     ViewData["Title"] = "Listar Clientes";
 }
 
+@using WebCadeteria.ViewModels
+@model List<ClienteViewModel>
+
 <div class="text-center">
     <h2>Clientes en el sistema</h2>
     <table>
@@ -17,32 +20,25 @@
             </tr>
         </thead>
         <tbody>
-            @{
-                string path_clientes = @"Recursos\clientes.csv";
-                string[]leer = System.IO.File.ReadAllLines(path_clientes);}
-                @foreach (string item in leer)
-                {
-                    string[]linea = item.Split(";");
-                    <Tr>
-                        <Td>@linea[0]</Td>
-                        <Td>@linea[1]</Td>
-                        <Td>@linea[2]</Td>
-                        <Td>@linea[3]</Td>
-                        <Td>@linea[4]</Td>
-                        <Td>
-                            <a href="@Url.Action("BajarCliente","Cliente", new { id = linea[0]} )">
-                                Eliminar
-                            </a>
-                        </Td>
-
-                        <Td> 
-                            <a href="@Url.Action("ModificarCliente","Cliente", new { id = linea[0]} )">
-                                Modificar
-                            </a>       
-                        </Td>
-                    </Tr>
-                }
-    </table>
-    
-    
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.Id</td>
+                    <td>@cliente.Nombre</td>
+                    <td>@cliente.Direccion</td>
+                    <td>@cliente.Telefono</td>
+                    <td>@cliente.DatosReferenciaDireccion</td>
+                    <td>
+                        <a href="@Url.Action("BajarCliente","Cliente", new { id = @cliente.Id} )">
+                            Eliminar
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("ModificarCliente","Cliente", new { id = @cliente.Id} )">
+                            Modificar
+                        </a>     
+                    </td>
+                </tr>
+            }
+    </table>    
 </div>
