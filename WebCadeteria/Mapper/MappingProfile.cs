@@ -11,8 +11,8 @@ namespace WebCadeteria.Mapper{
             CreateMap<ClienteViewModel, Cliente>();
             CreateMap<Cliente, ClienteViewModel>();
             
-            CreateMap<Pedido, PedidoViewModel>();
             CreateMap<PedidoViewModel, Pedido>();
+            CreateMap<Pedido, PedidoViewModel>();
         }
     }
 }

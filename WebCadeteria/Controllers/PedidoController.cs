@@ -23,6 +23,7 @@ namespace WebCadeteria.Controllers{
             return View("ListarPedidos", _repository.FindAll());
         }
 
+        [HttpGet]
         public IActionResult AgregarPedido()
         {
             return View();

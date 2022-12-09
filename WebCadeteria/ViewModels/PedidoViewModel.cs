@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace WebCadeteria.ViewModels{
     public class PedidoViewModel{
 
-        [Required]
+        [Required, Range(0, int.MaxValue)] //nro positivo
         public int Nro { get; set; }
 
         [Required, StringLength(200)]
@@ -12,16 +12,16 @@ namespace WebCadeteria.ViewModels{
         [Required, StringLength(100)]
         public string Estado { get; set; }
 
-        [Required]
+        [Required, Range(0, int.MaxValue)]
         public int Cliente { get; set; }
 
-        [Required]
+        [Required, Range(0, int.MaxValue)]
         public int Cadete { get; set; }
 
         public PedidoViewModel(){}
 
-        public PedidoViewModel(int nro, string _obs, string _estado, int _cliente, int _cadete){
-            Nro = nro;
+        public PedidoViewModel(int _nro, string _obs, string _estado, int _cliente, int _cadete){
+            Nro = _nro;
             Obs = _obs;
             Estado = _estado;
             Cliente = _cliente;
