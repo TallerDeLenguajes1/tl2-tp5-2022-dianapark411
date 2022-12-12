@@ -5,38 +5,52 @@
 @using WebCadeteria.ViewModels
 @model List<CadeteViewModel>
 
-<div class="text-center">
-    <h2>Cadetes en el sistema</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Direccion</th>
-                <th>Telefono</th>
-                <th>Eliminar</th>
-                <th>Modificar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var cadete in Model)
-            {
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+@if(Accessor.HttpContext.Session.GetString("Rol") == "Administrador"){  
+    <div class="text-center">
+        <h3 class="Alta"> @Html.ActionLink("Agregar Cadete","CargarCadete","Cadete")</h3>
+        <h2>Cadetes en el sistema</h2>
+        <table>
+            <thead>
                 <tr>
-                    <td>@cadete.Id</td>
-                    <td>@cadete.Nombre</td>
-                    <td>@cadete.Direccion</td>
-                    <td>@cadete.Telefono</td>
-                    <td>
-                        <a href="@Url.Action("BajarCadete","Cadete", new { id = @cadete.Id } )">
-                            Eliminar
-                        </a>
-                    </td>
-                    <td>
-                        <a href="@Url.Action("ModificarCadete","Cadete", new { id = @cadete.Id } )">
-                            Modificar
-                        </a>     
-                    </td>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Eliminar</th>
+                    <th>Modificar</th>
                 </tr>
-            }
-    </table>    
-</div>
+            </thead>
+            <tbody>
+                @foreach (var cadete in Model)
+                {
+                    <tr>
+                        <td>@cadete.Id</td>
+                        <td>@cadete.Nombre</td>
+                        <td>@cadete.Direccion</td>
+                        <td>@cadete.Telefono</td>
+                        <td>
+                            <a href="@Url.Action("BajarCadete","Cadete", new { id = @cadete.Id } )">
+                                Eliminar
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("ModificarCadete","Cadete", new { id = @cadete.Id } )">
+                                Modificar
+                            </a>     
+                        </td>
+                    </tr>
+                }
+        </table>    
+    </div>
+}
+else{ //usuario es cadete o no se logeo
+    <div class="text-center">   
+        <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
+    </div>  
+}
+
+@section Scripts { <partial name = "_ValidationScriptsPartial" /> } 

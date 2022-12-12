@@ -10,7 +10,6 @@ namespace WebCadeteria.Controllers{
     {
 
         private readonly ILogger<HomeController> _logger;
-
         private readonly IMapper _mapper;
         private readonly ICliente _repository;
 
@@ -25,10 +24,12 @@ namespace WebCadeteria.Controllers{
             return View("ListarClientes", _repository.FindAll());
         }
 
+        [HttpGet]
         public IActionResult CargarCliente()
         {
             return View();
         }
+        
         [HttpPost]
         public IActionResult CargarCliente(ClienteViewModel _clienteVM)
         {
@@ -65,7 +66,7 @@ namespace WebCadeteria.Controllers{
         [HttpPost]
         public IActionResult ModificarCliente(ClienteViewModel _clienteVM)
         {
-           if(ModelState.IsValid){
+            if(ModelState.IsValid){
                 
                 Cliente cli = _mapper.Map<Cliente>(_clienteVM);
                 _repository.Update(cli);

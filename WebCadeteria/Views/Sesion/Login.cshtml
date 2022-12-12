@@ -1,0 +1,22 @@
+@model WebCadeteria.ViewModels.SesionViewModel
+@{
+    ViewData["Title"] = "Iniciar Sesion";
+}
+<h4>INICIE SESIÓN: </h4>
+
+<form asp-controller="Sesion" asp-action= "Login" method="POST">
+
+    <!-- name mismo nombre que los atributos en el ViewModel -->
+    <label for="usuario">Usuario
+        <input type="text" id="usuario" name="User" >
+    </label>
+
+    <label for="clave">Contraseña
+        <input type="password" id="clave" name="Password" >
+    </label>
+
+    <fieldset>
+        <button>Iniciar Sesion</button>
+    </fieldset>
+   
+</form>

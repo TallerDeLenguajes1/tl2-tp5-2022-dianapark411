@@ -5,42 +5,53 @@
 @using WebCadeteria.ViewModels
 @model List<PedidoViewModel>
 
-<div class="text-center">
-    <h2>Pedidos en el sistema</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Numero</th>
-                <th>Observacion</th>
-                <th>Estado</th>
-                <th>Cliente</th>
-                <th>Cadete</th>
-                <th>Eliminar</th>
-                <th>Modificar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var pedido in Model)
-            {
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+@if((Accessor.HttpContext.Session.GetString("Rol") == "Administrador" ) || (Accessor.HttpContext.Session.GetString("Rol") == "Cadete")){
+    <div class="text-center">
+        @if(Accessor.HttpContext.Session.GetString("Rol") == "Administrador"){ 
+            <h3 class="Alta"> @Html.ActionLink("Agregar Pedido","AgregarPedido","Pedido")</h3>//solo admin puede agregar pedidos
+        }
+        <h2>Pedidos en el sistema</h2>
+        <table>
+            <thead>
                 <tr>
-                    <td>@pedido.Nro</td>
-                    <td>@pedido.Obs</td>
-                    <td>@pedido.Estado</td>
-                    <td>@pedido.Cliente</td>
-                    <td>@pedido.Cadete</td>
-                    <td>
-                        <a href="@Url.Action("BajarPedido","Pedido", new { id = @pedido.Nro } )">
-                            Eliminar
-                        </a>
-                    </td>
-                    <td>
-                        <a href="@Url.Action("ModificarPedido","Pedido", new { id = @pedido.Nro } )">
-                            Modificar
-                        </a>     
-                    </td>
+                    <th>Numero</th>
+                    <th>Observacion</th>
+                    <th>Estado</th>
+                    <th>Cliente</th>
+                    <th>Cadete</th>
+                    <th>Eliminar</th>
+                    <th>Modificar</th>
                 </tr>
-            }
-    </table>
-    
-    
-</div>
+            </thead>
+            <tbody>
+                @foreach (var pedido in Model)
+                {
+                    <tr>
+                        <td>@pedido.Nro</td>
+                        <td>@pedido.Obs</td>
+                        <td>@pedido.Estado</td>
+                        <td>@pedido.Cliente</td>
+                        <td>@pedido.Cadete</td>
+                        <td>
+                            <a href="@Url.Action("BajarPedido","Pedido", new { id = @pedido.Nro} )">
+                                Eliminar
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("ModificarPedido","Pedido", new { id = @pedido.Nro} )">
+                                Modificar
+                            </a>     
+                        </td>
+                    </tr>
+                }
+        </table>  
+    </div>
+}
+else{
+    <div class="text-center">   
+        <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
+    </div>   
+}

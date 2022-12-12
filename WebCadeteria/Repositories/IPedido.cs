@@ -7,5 +7,8 @@ public interface IPedido
     void Insert(Pedido ped);
     void Update(Pedido ped);
     void Delete(int id);
+
+
+    List<PedidoViewModel> FindByIdCadete(int id_cad);
 }
    

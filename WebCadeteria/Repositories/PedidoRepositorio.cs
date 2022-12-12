@@ -119,5 +119,30 @@ namespace WebCadeteria.Repositories{
                 throw;
             }
         }
+
+
+        public List<PedidoViewModel> FindByIdCadete(int id_cad){
+            List<PedidoViewModel> ListadoPedidosVM = new();
+            string queryString = "SELECT * FROM Pedido WHERE Cadete = @cadete;";
+            try
+            {
+                using (SqliteConnection connection = new SqliteConnection(_connectionString)){
+                    
+                    var command = new SqliteCommand(queryString, connection);
+                    command.Parameters.AddWithValue("@cadete",id_cad);
+                    connection.Open();
+                    using(SqliteDataReader reader = command.ExecuteReader()){
+                        while(reader.Read()){
+                            ListadoPedidosVM.Add( new PedidoViewModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),reader.GetInt32(3), reader.GetInt32(4)));
+                        }
+                    }
+                    connection.Close();
+                }
+            }catch{   
+                throw;
+            }
+
+            return ListadoPedidosVM;
+        }
     }
 }

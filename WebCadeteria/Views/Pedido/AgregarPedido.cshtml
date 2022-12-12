@@ -1,33 +1,48 @@
-@model WebCadeteria.ViewModels.PedidoViewModel
 @{
-    ViewData["Title"] = "Alta Pedido";
+    ViewData["Title"] = "Cargar Pedido";
 }
 
-<h4>ALTA PEDIDO: </h4>
-<form asp-controller="Pedido" asp-action= "AgregarPedido" method="POST">
-    <label asp-for="@Model.Obs">Observacion: 
-        <input asp-for="@Model.Obs" placeholder="Ingrese observacion: ">
-        <span asp-validation-for="@Model.Obs"></span>
-    </label>
+@model WebCadeteria.ViewModels.PedidoViewModel
 
-    <label asp-for="@Model.Estado">Estado: 
-        <input asp-for="@Model.Estado" placeholder="Ej: en preparacion">
-        <span asp-validation-for="@Model.Estado"></span>
-    </label>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
 
-    <label asp-for="@Model.Cliente">Id cliente: 
-        <input asp-for="@Model.Cliente" placeholder="Ej: 1">
-        <span asp-validation-for="@Model.Cliente"></span>
-    </label>
+@if(Accessor.HttpContext.Session.GetString("Rol") == "Administrador"){
+    
+    <div>
+        <form asp-controller="Pedido" asp-action="AgregarPedido" method="post">
+            <label asp-for="@Model.Obs">Observacion:
+                <input asp-for="@Model.Obs" placeholder="Ej: 1 kg de pan">
+                <span asp-validation-for="@Model.Obs"></span>
+            </label>
+            
+            <label asp-for="@Model.Estado">Estado: 
+                <input asp-for="@Model.Estado" placeholder="Ej: en camino">
+                <span asp-validation-for="@Model.Estado"></span>
+            </label>
 
-    <label asp-for="@Model.Cadete">Id cadete: 
-        <input asp-for="@Model.Cadete" placeholder="Ej: 1">
-        <span asp-validation-for="@Model.Cadete"></span>
-    </label>
+            <label asp-for="@Model.Cliente">Id cliente: 
+                <input asp-for="@Model.Cliente" placeholder="Ej: 1">
+                <span asp-validation-for="@Model.Cliente"></span>
+            </label>
 
-    <fieldset>
-        <button>Enviar</button>
-    </fieldset>
-</form>
+            <label asp-for="@Model.Cadete">Id cadete: 
+                <input asp-for="@Model.Cadete" placeholder="Ej: 1">
+                <span asp-validation-for="@Model.Cadete"></span>
+            </label>
+
+                    
+            <fieldset>
+                <button>Enviar</button>
+            </fieldset>
+        </form>
+    </div>
+}
+else{ //usuario es cadete o no se logeo
+    <div class="text-center">   
+        <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
+    </div>  
+}
+
 
 @section Scripts { <partial name = "_ValidationScriptsPartial" /> } 

@@ -4,32 +4,44 @@
 
 @model WebCadeteria.ViewModels.ClienteViewModel
 
-<div>
-    <form asp-controller="Cliente" asp-action="ModificarCliente" method="post">
-        <label asp-for="@Model.Nombre">Nombre:
-            <input asp-for="@Model.Nombre" placeholder="Ingrese el nombre">
-            <span asp-validation-for="@Model.Nombre"></span>
-        </label>
-        
-        <label asp-for="@Model.Direccion">Direccion: 
-            <input asp-for="@Model.Direccion" placeholder="Ej: Av. Independencia 1900">
-            <span asp-validation-for="@Model.Direccion"></span>
-        </label>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
 
-        <label asp-for="@Model.Telefono">Telefono: 
-            <input asp-for="@Model.Telefono" placeholder="Ej: 4256162">
-            <span asp-validation-for="@Model.Telefono"></span>
-        </label>
-
-        <label asp-for="@Model.DatosReferenciaDireccion">Datos de referencia de direccion: 
-            <input asp-for="@Model.DatosReferenciaDireccion" placeholder="Ej: Entre Colon y Alem">
-            <span asp-validation-for="@Model.DatosReferenciaDireccion"></span>
-        </label>
-                
-        <fieldset>
-            <button>Modificar</button>
-        </fieldset>
-    </form>
-</div>
+@if(Accessor.HttpContext.Session.GetString("Rol") == "Administrador"){
+    
+    <div>
+        <form asp-controller="Cliente" asp-action="ModificarCliente" method="post">
+            <label asp-for="@Model.Nombre">Nombre:
+                <input asp-for="@Model.Nombre" placeholder="Ingrese el nombre">
+                <span asp-validation-for="@Model.Nombre"></span>
+            </label>
             
-@section Scripts { <partial name="_ValidationScriptsPartial" /> }
+            <label asp-for="@Model.Direccion">Direccion: 
+                <input asp-for="@Model.Direccion" placeholder="Ej: Av. Independencia 1900">
+                <span asp-validation-for="@Model.Direccion"></span>
+            </label>
+
+            <label asp-for="@Model.Telefono">Telefono: 
+                <input asp-for="@Model.Telefono" placeholder="Ej: 4256162">
+                <span asp-validation-for="@Model.Telefono"></span>
+            </label>
+
+            <label asp-for="@Model.DatosReferenciaDireccion">Datos de referencia de direccion: 
+                <input asp-for="@Model.DatosReferenciaDireccion" placeholder="Ej: Entre Colon y Alem">
+                <span asp-validation-for="@Model.DatosReferenciaDireccion"></span>
+            </label>
+                    
+            <fieldset>
+                <button>Modificar</button>
+            </fieldset>
+        </form>
+    </div>
+}
+else{ //usuario es cadete o no se logeo
+    <div class="text-center">   
+        <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
+    </div>  
+}
+
+
+@section Scripts { <partial name = "_ValidationScriptsPartial" /> } 

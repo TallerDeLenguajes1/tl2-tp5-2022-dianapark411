@@ -42,6 +42,13 @@ nav a{
   font-size: 1.5rem;
 }
 
+.Alta{
+  padding-top: 1rem;
+  text-decoration: none;
+  color:rgb(180, 21, 21);
+  font-size: 1.5rem;
+}
+
 header{
   background-color:grey;
   height: 10vh;
@@ -61,6 +68,29 @@ h4{
   margin-top: 1em;
   padding: auto;
 }
+main{
+  width: 100%;
+  height: 80vh;
+  background-color: white;
+  text-align: justify;
+  color: black;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1.2rem;
+}
+main p{
+  padding-top: 0.5rem;
+}
+main h2{
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+}
+
+main h3{
+  padding-top: 3rem;
+  padding-bottom: 0.5rem;
+}
+
+
 form{
   background-color: grey;
   margin: 2rem auto;
@@ -85,27 +115,6 @@ input{
   width: 20vw;
 }
 
-main{
-  width: 100%;
-  height: 80vh;
-  background-color: white;
-  text-align: justify;
-  color: black;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 1.2rem;
-}
-main p{
-  padding-top: 0.5rem;
-}
-main h2{
-  padding-top: 3rem;
-  padding-bottom: 1rem;
-}
-
-main h3{
-  padding-top: 3rem;
-  padding-bottom: 0.5rem;
-}
 
 table{
   width: 90%;

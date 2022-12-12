@@ -4,32 +4,61 @@
 
 @model WebCadeteria.ViewModels.PedidoViewModel
 
-<div>
-    <form asp-controller="Pedido" asp-action="ModificarPedido" method="post">
-        <label asp-for="@Model.Obs">Observacion: 
-            <input asp-for="@Model.Obs" placeholder="Ingrese observacion: ">
-            <span asp-validation-for="@Model.Obs"></span>
-        </label>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
 
-        <label asp-for="@Model.Estado">Estado: 
-            <input asp-for="@Model.Estado" placeholder="Ej: en preparacion">
-            <span asp-validation-for="@Model.Estado"></span>
-        </label>
+@if(Accessor.HttpContext.Session.GetString("Rol") == "Administrador"){
+    <div>
+        <form asp-controller="Pedido" asp-action="ModificarPedido" method="post">
+            <label asp-for="@Model.Obs">Observacion: 
+                <input asp-for="@Model.Obs" placeholder="Ingrese observacion: ">
+                <span asp-validation-for="@Model.Obs"></span>
+            </label>
 
-        <label asp-for="@Model.Cliente">Id cliente: 
-            <input asp-for="@Model.Cliente" placeholder="Ej: 1">
-            <span asp-validation-for="@Model.Cliente"></span>
-        </label>
+            <label asp-for="@Model.Estado">Estado: 
+                <input asp-for="@Model.Estado" placeholder="Ej: en preparacion">
+                <span asp-validation-for="@Model.Estado"></span>
+            </label>
 
-        <label asp-for="@Model.Cadete">Id cadete: 
-            <input asp-for="@Model.Cadete" placeholder="Ej: 1">
-            <span asp-validation-for="@Model.Cadete"></span>
-        </label>
+            <label asp-for="@Model.Cliente">Id cliente: 
+                <input asp-for="@Model.Cliente" placeholder="Ej: 1">
+                <span asp-validation-for="@Model.Cliente"></span>
+            </label>
 
-        <fieldset>
-            <button>Modificar</button>
-        </fieldset>
-    </form>
-</div>
-            
+            <label asp-for="@Model.Cadete">Id cadete: 
+                <input asp-for="@Model.Cadete" placeholder="Ej: 1">
+                <span asp-validation-for="@Model.Cadete"></span>
+            </label>
+
+            <fieldset>
+                <button>Modificar</button>
+            </fieldset>
+        </form>
+    </div>
+}
+else{
+    @if(Accessor.HttpContext.Session.GetString("Rol") == "Cadete"){
+        <div>
+            <form asp-controller="Pedido" asp-action="ModificarPedido" method="post">
+                
+
+                <label asp-for="@Model.Estado">Estado: 
+                    <input asp-for="@Model.Estado" placeholder="Ej: en preparacion">
+                    <span asp-validation-for="@Model.Estado"></span>
+                </label>
+
+
+                <fieldset>
+                    <button>Modificar</button>
+                </fieldset>
+            </form>
+        </div>
+    }
+    else{
+        <div class="text-center">   
+            <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
+        </div>  
+    }
+}
+
 @section Scripts { <partial name="_ValidationScriptsPartial" /> }

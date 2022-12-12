@@ -1,6 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Opciones";
 }
+
+<!-- Administrador :ABM y listado de cadetes, Pedidos y Clientes -->
+<!-- Cadete: Listado de pedidos del cadete, y cambio de estado de pedidos del cadete. -->
+<!-- Usuario no logueados: Pantalla de logueo -->
 
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor Accessor
@@ -18,12 +22,5 @@ else{
             <h3 class="display-4"> @Html.ActionLink("LISTAR PEDIDOS","MostrarPedidosCadete","Pedido", new { cadete = Accessor.HttpContext.Session.GetInt32("IdCad")})</h3>
         </div>
     }
-    else{
-        <div class="text-center">   
-            <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
-        </div>  
-    }
-    
 }
 
-@section Scripts { <partial name = "_ValidationScriptsPartial" /> } 

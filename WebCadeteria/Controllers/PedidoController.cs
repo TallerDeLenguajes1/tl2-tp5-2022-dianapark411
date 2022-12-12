@@ -8,9 +8,10 @@ namespace WebCadeteria.Controllers{
     public class PedidoController : Controller
     {   
         private readonly ILogger<HomeController> _logger;
+        
         private readonly IMapper _mapper;
-
         private readonly IPedido _repository;
+
         public PedidoController(ILogger<HomeController> logger, IMapper mapper, IPedido repository)
         {
             _logger = logger;
@@ -19,7 +20,7 @@ namespace WebCadeteria.Controllers{
         }
         
         public IActionResult Index()
-        {         
+        {    
             return View("ListarPedidos", _repository.FindAll());
         }
 
@@ -47,6 +48,10 @@ namespace WebCadeteria.Controllers{
             return RedirectToAction("Index");
         }
 
+        public IActionResult MostrarPedidosCadete(int cadete){
+            return View("ListarPedidos", _repository.FindByIdCadete(cadete));
+        }
+
         public IActionResult BajarPedido(int id){
             _repository.Delete(id);
             return RedirectToAction("Index");
@@ -61,8 +66,9 @@ namespace WebCadeteria.Controllers{
         }
 
         [HttpPost]
-        public IActionResult ModificarPedido(PedidoViewModel _pedidoVM) //revisar porque se cambia el id cuando lo modifico
-        {
+        public IActionResult ModificarPedido(PedidoViewModel _pedidoVM) 
+        {   
+            //revisar porque recibe el vm con nro = 0
             if(ModelState.IsValid){
                 
                 Pedido ped = _mapper.Map<Pedido>(_pedidoVM);

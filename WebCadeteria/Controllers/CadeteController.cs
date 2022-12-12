@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebCadeteria.Models;
 using WebCadeteria.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 namespace WebCadeteria.Controllers{
     public class CadeteController : Controller
@@ -23,6 +24,7 @@ namespace WebCadeteria.Controllers{
             return View("ListarCadetes", _repository.FindAll());
         }
 
+        [HttpGet]
         public IActionResult CargarCadete()
         {
             return View();
