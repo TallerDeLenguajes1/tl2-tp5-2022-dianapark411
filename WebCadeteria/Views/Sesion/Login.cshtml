@@ -1,22 +1,41 @@
 @model WebCadeteria.ViewModels.SesionViewModel
+
 @{
     ViewData["Title"] = "Iniciar Sesion";
 }
-<h4>INICIE SESIÓN: </h4>
 
-<form asp-controller="Sesion" asp-action= "Login" method="POST">
+<div class="container">
+    <header class="py-3 my-4">
+        <h3 class="text-center">CadeteriaWeb</h3>
+    </header>
+</div>
 
-    <!-- name mismo nombre que los atributos en el ViewModel -->
-    <label for="usuario">Usuario
-        <input type="text" id="usuario" name="User" >
-    </label>
+<div class="container">
 
-    <label for="clave">Contraseña
-        <input type="password" id="clave" name="Password" >
-    </label>
+    <form asp-controller="Sesion" asp-action= "Login" method="POST">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-    <fieldset>
-        <button>Iniciar Sesion</button>
-    </fieldset>
-   
-</form>
+        <div class="form-floating mt-3">
+            <input type="text" class="form-control" id="floatingInput" asp-for="@Model.User"/> 
+            <span asp-validation-for="@Model.User"></span>
+            <label for="floatingInput" >Usuario</label>
+        </div>
+        <div class="form-floating mt-3">
+            <input type="password" class="form-control" id="floatingPassword" asp-for="@Model.Password"/> 
+            <span asp-validation-for="@Model.Password"></span>
+            <label for="floatingPassword">Contraseña</label>
+
+        </div>
+
+        <button class="btn btn-dark w-100 mt-3 py-2" type="submit">Iniciar sesion</button>
+    </form>
+</div>
+
+<div class="container">
+    <footer class="py-3 my-4">
+        <p class="text-center text-body-secondary">© 2022 WebCadeteria</p>
+    </footer>
+</div>
+
+@section Scripts { <partial name = "_ValidationScriptsPartial" /> } 
+

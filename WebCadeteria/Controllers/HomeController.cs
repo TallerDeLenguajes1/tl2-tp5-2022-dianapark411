@@ -14,13 +14,27 @@ public class HomeController : Controller
     }
 
     public IActionResult Index()
-    {
+    {   
+        
+        //Usuario no logueados: Pantalla de logueo
+
+        if (!esta_logueado()) {
+            return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+        }
         return View();
     }
 
     public IActionResult Privacy()
     {
         return View();
+    }
+
+    private bool esta_logueado(){
+        return HttpContext.Session.Keys.Any();
+    }
+    private bool es_admin()
+    {
+        return HttpContext.Session.Keys.Any() && HttpContext.Session.GetString("Rol") == "Administrador";
     }
 
 

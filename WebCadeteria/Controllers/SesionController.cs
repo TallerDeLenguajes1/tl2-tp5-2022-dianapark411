@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebCadeteria.Models;
 using WebCadeteria.ViewModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Data.Sqlite;
 using AutoMapper;
 
@@ -21,34 +22,35 @@ namespace WebCadeteria.Controllers{
             _mapper = mapper;
             _connectionString = _configuration.GetConnectionString("ConnectionString");
         }
-
-        public ActionResult Index()
+        
+        public IActionResult Index()
         {
             return View("Login");
         }
 
-        public ActionResult Login()
+        [HttpGet]
+        public IActionResult Login()
         {  
-            return View();
+            return View(new SesionViewModel());
         }
 
         [HttpPost]
-        public ActionResult Login(SesionViewModel _sesionVM) 
+        public IActionResult Login(SesionViewModel _sesionVM) 
         {
             if(ModelState.IsValid){
                 if (string.IsNullOrEmpty(_sesionVM.User) || string.IsNullOrEmpty(_sesionVM.Password)){
-                    return View("Login");
+                    return RedirectToAction("Index");
                 }else{
                     try
                     {
                         using (SqliteConnection connection = new SqliteConnection(_connectionString)){
                         
-                            string queryString = "SELECT * FROM Usuarios WHERE Usuario = @usuario AND Contraseña = @contra ";
+                            string queryString = "SELECT * FROM Usuarios WHERE Usuario = @_usuario AND Contraseña = @_contra ";
                                         
                             var command = new SqliteCommand(queryString, connection);
                             
-                            command.Parameters.AddWithValue("@usuario", _sesionVM.User);
-                            command.Parameters.AddWithValue("@contra", _sesionVM.Password);
+                            command.Parameters.AddWithValue("@_usuario", _sesionVM.User);
+                            command.Parameters.AddWithValue("@_contra", _sesionVM.Password);
 
                             connection.Open();
                             
@@ -61,13 +63,7 @@ namespace WebCadeteria.Controllers{
                                         HttpContext.Session.SetString("Nombre", reader.GetString(1));
                                         HttpContext.Session.SetString("Usuario", reader.GetString(2));
                                         HttpContext.Session.SetString("Contraseña", reader.GetString(3));
-                                        HttpContext.Session.SetString("Rol", reader.GetString(4));
-                                        if (HttpContext.Session.GetString("Rol") == "Cadete"){
-                                            HttpContext.Session.SetInt32("IdCad", reader.GetInt32(5));
-                                        }else{
-                                            HttpContext.Session.SetInt32("IdCad", 99999); //de todas formas no se usa ese campo para los controles de admin
-                                        }
-                                        
+                                        HttpContext.Session.SetString("Rol", reader.GetString(4));                                      
                                     }
                                 }else{   
                                     return View("Reintentar");
@@ -80,16 +76,16 @@ namespace WebCadeteria.Controllers{
                     }
                     
                 }
-                return View("../Home/Opciones");
+                return View("../Home/Index");
             }else{
                 return View();
             }     
         }
 
-        public ActionResult Logout()
+        public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Index");
+            return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

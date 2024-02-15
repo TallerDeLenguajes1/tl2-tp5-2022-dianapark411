@@ -1,174 +1,120 @@
-* {
-  border: 0;
-  margin: 0;
-  padding: 0;
+html {
+font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
+html {
     font-size: 16px;
-  }
+}
 }
 
 html {
-  position: relative;
-  min-height: 100%;
-  font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  background-color: white;
-}
-nav{
-  background-color:grey;
-  height: 7vh;
-  width: 45vw;
-  margin: auto 1rem;
-  padding:auto;
-  font-size: 1.3rem;
-}
-nav ul{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly; 
-  align-items: left;
-  height: 7vh;
-  list-style: none;
-  padding: 1em;
-}
-nav a{
-  text-decoration: none;
-  color:rgb(180, 21, 21);
-  font-size: 1.5rem;
+    margin-bottom: 60px;
 }
 
-.Alta{
-  padding-top: 1rem;
-  text-decoration: none;
-  color:rgb(180, 21, 21);
-  font-size: 1.5rem;
+.container-principal{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-header{
-  background-color:grey;
-  height: 10vh;
-  display: flex;
-  flex-direction: row;
-  vertical-align: middle;
-  padding: auto;
+.middle-section{
+    margin-top: 5%; 
+    margin-bottom: 5%;
 }
 
-header h1{
-  font-size: 1.8rem;
-  padding-top: 1.2rem;
-  padding-left: 1rem;
-}
-h4{
-  font-size: 1.8rem;
-  margin-top: 1em;
-  padding: auto;
-}
-main{
-  width: 100%;
-  height: 80vh;
-  background-color: white;
-  text-align: justify;
-  color: black;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 1.2rem;
-}
-main p{
-  padding-top: 0.5rem;
-}
-main h2{
-  padding-top: 3rem;
-  padding-bottom: 1rem;
+.carousel-inner{
+    width: 100%;
+    height: 60vh;
+    background-image: url('https://clubdelicatessen.com/wp-content/uploads/2021/04/Comidas-gourmet-compartidas.jpg');
+    background-size: cover; /* Ajusta el tamaño para cubrir completamente el contenedor */
+    background-position: center; /* Ajusta la posición de la imagen */
+    background-repeat: no-repeat; /* Evita la repetición de la imagen */
 }
 
-main h3{
-  padding-top: 3rem;
-  padding-bottom: 0.5rem;
+.carousel-item{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.carousel-caption{
+    width: 70%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top:auto;
+    margin-bottom:auto;
+    background-color: transparent;
+}
+.footer{
+    margin-top:auto;
+    margin-bottom:0;
 }
 
 
-form{
-  background-color: grey;
-  margin: 2rem auto;
-  padding: 3rem;
-  width: 60vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  border: #2c2e2e;
-  border-style: solid;
-}
-form label{
-  padding: 1rem;
-  width: 90vw;
-}
-form button{
-  padding: 1rem;
-}
-input{
-  margin-left: 1rem;
-  padding: 1rem;
-  width: 20vw;
+/* Estilos para el menú */  
+/* Estilos para el menú */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
 }
 
+.menu li {
+    display: inline-block;
+    position: relative;
+    width: 15vb;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
 
-table{
-  width: 90%;
-  margin: 1rem auto;
-  border-collapse:collapse;
-  text-align: center;
-  background-color: #9a9a9a;
+.menu li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    text-align: center;
+    width: 15vb;
 }
-table caption{
-  padding-top: 0.5rem;
-  padding-bottom: 1rem;
-  font-weight: bold;
-  font-size: 1.4rem;
+
+.menu li:hover {
+    background-color: #f5f5f5;
 }
-thead{
-  background-color: #a70000;
-  color:rgb(255, 255, 255);
+
+/* Estilos para el menú desplegable */
+.submenu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: none;
+    z-index: 1;
+    width: 15vb;
 }
-td,th{
-  border: 2px solid black;
-  padding: 0.5rem;
+
+.submenu li {
+    display: block;
+    width: 15vb;
+    margin-left: -32px;
+    padding-bottom: 10px;
 }
-td{
-  vertical-align: middle;
+
+.submenu li a {
+    margin-left: 0;
+    color: #333;
+    text-decoration: none;
+    margin-left: 0px;
+    width: 15vb;
 }
-td p{
-  text-align: justify;
-  padding: 0.5rem;
-}
-td figure{
-  width: 8rem;
-  padding-left: 1rem;
-}
-img{
-  width: 100%;
-}
-figcaption{
-  text-align: center;
-  font-style: oblique;
-  font-size: 1.1rem;
-}
-footer{
-  background-color:grey;
-  height: 10vh;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  vertical-align: middle;
-  color: black;
-}
-footer p{
-  color:black;
-  font-family:'Arial Narrow Bold', sans-serif;
-  font-size: 1.5rem;
-  text-decoration: none;
+
+.menu li:hover .submenu {
+    display: block;
 }

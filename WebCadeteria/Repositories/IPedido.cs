@@ -3,7 +3,7 @@ using WebCadeteria.ViewModels;
 public interface IPedido
 {
     Pedido FindById(int id);
-    List<PedidoViewModel> FindAll();
+    List<ListarPedidoViewModel> FindAll();
     void Insert(Pedido ped);
     void Update(Pedido ped);
     void Delete(int id);

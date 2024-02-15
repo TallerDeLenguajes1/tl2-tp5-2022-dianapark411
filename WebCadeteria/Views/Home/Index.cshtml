@@ -2,28 +2,108 @@
     ViewData["Title"] = "Home Page";
 }
 
-@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor Accessor
+<div class="container-principal">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <h3 class="col-md-2 text-start"class="navbar-brand">CadeteriaWeb</h3>
+        <nav class="col-md-8">
+            <ul class="menu">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                <li>
+                    <a href="#">Cadete</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Cadete" asp-action="Index">Listar Cadetes</a></li>
+                        <li class="text-center"><a asp-controller="Cadete" asp-action="CargarCadete">Cargar Cadete</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Cliente</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Cliente" asp-action="Index">Listar Clientes</a></li>
+                        <li class="text-center"><a asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Pedido</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
+                        <li class="text-center"><a asp-controller="Pedido" asp-action="AgregarPedido">Cargar Pedido</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Usuario</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Usuario" asp-action="Index">Listar Usuarios</a></li>
+                        <li class="text-center"><a asp-controller="Usuario" asp-action="CargarUsuario">Cargar Usuario</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>    
 
-@if(Accessor.HttpContext.Session.GetString("Rol") == "Administrador"){
-    <div class="text-center">   
-        <h3 class="display-4"> @Html.ActionLink("LISTAR CADETES","Index","Cadete")</h3>
-        <h3 class="display-4"> @Html.ActionLink("LISTAR CLIENTES","Index","Cliente")</h3>
-        <h3 class="display-4"> @Html.ActionLink("LISTAR PEDIDOS","Index","Pedido")</h3>
-    </div>
-}
-else{
-    @if(Accessor.HttpContext.Session.GetString("Rol") == "Cadete"){
-        <div class="text-center">   
-            <h3 class="display-4"> @Html.ActionLink("LISTAR PEDIDOS","MostrarPedidosCadete","Pedido", new { cadete = Accessor.HttpContext.Session.GetInt32("IdCad")})</h3>
+        <div class="col-md-2 text-end">
+            <button  type="button" class="btn btn-outline-dark me-2" width="100%">
+                <a asp-controller="Sesion" asp-action="Logout" class="nav-link px-4">Cerrar Sesión</a>
+            </button>
+            
         </div>
-    }
-    else{
-        <div class="text-center">   
-            <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
-        </div>  
-    }
-    
-}
+    </header>
+
+    <div class="middle-section">
+        <div id="myCarousel" class="carousel slide mb-6 pointer-event" data-bs-ride="carousel" width="100%" height="100%">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="Slide 4" class=""></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
+                    </svg>
+                    <div class="carousel-caption text-center">
+                        <h1>CadeteriaWeb</h1>
+                        <p class="opacity-75">Líderes en el servicio de mensajeria y cadeteria en Tucuman</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg>
+                    <div class="carousel-caption text-center">
+                        <h1>QUIENES SOMOS</h1>
+                        <p>Somos la empresa de tecnología líder en Q-Commerce y delivery en toda Latinoamérica. Una plataforma digital simple, práctica y sin costo adicional que permite a los usuarios elegir su plato o productos favoritos dentro de miles de opciones disponibles y realizar su pedido a través del sitio web o las aplicaciones para iPhone y Android. CadeteriaWeb conecta a quien quiere un producto, con quien lo quiere vender y con quien lo quiere entregar bajo la premisa de rapidez y sencillez, evolucionando hacia el Quick Commerce que se basa en satisfacer las expectativas de los usuarios centrándose en la conveniencia y eficiencia. Hoy en día, somos la empresa con mayor experiencia y alcance geográfico en Latinoamérica y buscamos desempeñar un papel de liderazgo en cada uno de los 15 mercados en los que estamos presentes.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg>
+                    <div class="carousel-caption text-center">
+                        <h1>MISION</h1>
+                        <p>¿Qué buscamos?
+                            Construir la compañía de Quick Commerce más innovadora de América Latina, convirtiendo nuestra pasión por la tecnología en experiencias sorprendentes, personalizadas e inolvidables para nuestros usuarios. Ayudando a crecer a nuestro ecosistema de comercios asociados, repartidores y comunidades, junto con el mejor talento, trabajando en equipo.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg>
+                    <div class="carousel-caption text-center">
+                        <h1>VISION</h1>
+                        <p>¿Qué nos guía?
+                            Ser la compañía líder en pedidos de comida online en el mundo.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+        </div>
+    </div>
+        
+    <footer class="py-3">
+        <p class="text-center text-body-secondary">© 2022 WebCadeteria</p>
+    </footer>
+</div>
 
 @section Scripts { <partial name = "_ValidationScriptsPartial" /> } 

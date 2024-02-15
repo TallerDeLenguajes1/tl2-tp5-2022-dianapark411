@@ -1,8 +1,8 @@
 @{
-    ViewData["Title"] = "Cargar cliente";
+    ViewData["Title"] = "Editar usuario";
 }
 
-@model WebCadeteria.ViewModels.ClienteViewModel
+@model WebCadeteria.ViewModels.ModificarUsuarioViewModel
 
 <div class="container-principal">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -51,29 +51,32 @@
     </header>
 
     <div class="middle-section">
-        <form asp-controller="Cliente" asp-action="CargarCliente" method="post">
+        <form asp-controller="Usuario" asp-action="ModificarUsuario" method="post">
             <label asp-for="@Model.Nombre">Nombre:
                 <input asp-for="@Model.Nombre" placeholder="Ingrese el nombre">
                 <span asp-validation-for="@Model.Nombre"></span>
             </label>
             
-            <label asp-for="@Model.Direccion">Direccion: 
-                <input asp-for="@Model.Direccion" placeholder="Ej: Av. Independencia 1900">
-                <span asp-validation-for="@Model.Direccion"></span>
+            <label asp-for="@Model.User">Nombre de usuario: 
+                <input asp-for="@Model.User" placeholder="Ingrese el nombre de usuario">
+                <span asp-validation-for="@Model.User"></span>
             </label>
 
-            <label asp-for="@Model.Telefono">Telefono: 
-                <input asp-for="@Model.Telefono" placeholder="Ej: 4256162">
-                <span asp-validation-for="@Model.Telefono"></span>
+            <label asp-for="@Model.Passwd">Contraseña: 
+                <input asp-for="@Model.Passwd" placeholder="Ingrese la contraseña">
+                <span asp-validation-for="@Model.Passwd"></span>
             </label>
 
-            <label asp-for="@Model.DatosReferenciaDireccion">Datos de referencia de direccion: 
-                <input asp-for="@Model.DatosReferenciaDireccion" placeholder="Ej: Entre Colon y Alem">
-                <span asp-validation-for="@Model.DatosReferenciaDireccion"></span>
+            <label asp-for="@Model.Rol">Rol:
+                <select asp-for="@Model.Rol">
+                    <option value="Administrador">Administrador</option>
+                    <option value="Cadete">Cadete</option>
+                </select>
+                <span asp-validation-for="@Model.Rol"></span>
             </label>
-                    
+
             <fieldset>
-                <button type="submit">Enviar</button>
+                <button type="submit">Modificar</button>
             </fieldset>
         </form>
     </div>

@@ -1,9 +1,23 @@
 @{
     ViewData["Title"] = "Reintentar";
 }
-
+<div class="container">
+    <header class="py-3 my-4">
+        <h3 class="text-center">CadeteriaWeb</h3>
+    </header>
+</div>
 <div class="text-center">   
     <h2>Usuario o contraseña incorrectos, intente nuevamente</h2>
-    <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
-
+    <div class="col-md-2 text-center mx-auto my-5">
+        <button  type="button" class="btn btn-outline-dark me-2" width="100%">
+            <a asp-controller="Sesion" asp-action="Login" class="nav-link px-4">Iniciar Sesión</a>
+        </button>     
+    </div>
 </div>
+
+<div class="container">
+    <footer class="py-3 my-4">
+        <p class="text-center text-body-secondary">© 2022 WebCadeteria</p>
+    </footer>
+</div>
+@section Scripts { <partial name = "_ValidationScriptsPartial" /> } 

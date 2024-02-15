@@ -39,9 +39,10 @@ namespace WebCadeteria.Repositories{
             }
             return ped;
         }
-        public List<PedidoViewModel> FindAll(){
-            List<PedidoViewModel> ListadoPedidosVM = new();
-            string queryString = "SELECT * FROM Pedido;";
+
+        public List<ListarPedidoViewModel> FindAll(){
+            List<ListarPedidoViewModel> ListadoPedidosVM = new();
+            string queryString = "SELECT Nro,Obs,Estado,Cliente.Nombre as Cliente,Cadete.Nombre as Cadete from Pedido INNER JOIN Cliente on Cliente=id_cli INNER JOIN Cadete on Cadete=id_cad;";
             try
             {
                 using (SqliteConnection connection = new SqliteConnection(_connectionString)){
@@ -50,7 +51,7 @@ namespace WebCadeteria.Repositories{
                     connection.Open();
                     using(SqliteDataReader reader = command.ExecuteReader()){
                         while(reader.Read()){
-                            ListadoPedidosVM.Add( new PedidoViewModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),reader.GetInt32(3), reader.GetInt32(4)));
+                            ListadoPedidosVM.Add( new ListarPedidoViewModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),reader.GetString(3), reader.GetString(4)));
                         }
                     }
                     connection.Close();
@@ -83,13 +84,15 @@ namespace WebCadeteria.Repositories{
         }
 
         public void Update(Pedido ped){
-            string queryString = "UPDATE Pedido set Obs = @_obs, Estado = @_estado, Cliente = @_cliente, Cadete = @_cadete WHERE Nro = @_id;";
+            string queryString = "UPDATE Pedido set Nro = @_nro, Obs = @_obs, Estado = @_estado, Cliente = @_cliente, Cadete = @_cadete WHERE Nro = @_nro;";
             try{
                 using (SqliteConnection connection = new SqliteConnection(_connectionString)){
                     var command = new SqliteCommand(queryString, connection);
                     connection.Open();
 
-                    command.Parameters.AddWithValue("@_id", ped.Nro);
+                    //command.Parameters.AddWithValue("@_id", Id);
+                    // si agrego esto en el form <input type="hidden" asp-for="@Model.Id" /> 
+                    command.Parameters.AddWithValue("@_nro", ped.Nro);
                     command.Parameters.AddWithValue("@_obs", ped.Obs);
                     command.Parameters.AddWithValue("@_estado", ped.Estado);
                     command.Parameters.AddWithValue("@_cliente", ped.Cliente);

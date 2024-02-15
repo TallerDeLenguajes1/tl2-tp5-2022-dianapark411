@@ -10,6 +10,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddTransient<ICadete, CadeteRepositorio>();
 builder.Services.AddTransient<ICliente, ClienteRepositorio>();
 builder.Services.AddTransient<IPedido, PedidoRepositorio>();
+builder.Services.AddTransient<IUsuario, UsuarioRepositorio>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

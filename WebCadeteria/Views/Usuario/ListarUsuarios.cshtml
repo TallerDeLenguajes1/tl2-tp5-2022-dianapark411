@@ -1,8 +1,9 @@
 @{
-    ViewData["Title"] = "Cargar cliente";
+    ViewData["Title"] = "Listar Usuarios";
 }
 
-@model WebCadeteria.ViewModels.ClienteViewModel
+@using WebCadeteria.ViewModels
+@model List<ListarUsuarioViewModel>
 
 <div class="container-principal">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -51,31 +52,49 @@
     </header>
 
     <div class="middle-section">
-        <form asp-controller="Cliente" asp-action="CargarCliente" method="post">
-            <label asp-for="@Model.Nombre">Nombre:
-                <input asp-for="@Model.Nombre" placeholder="Ingrese el nombre">
-                <span asp-validation-for="@Model.Nombre"></span>
-            </label>
-            
-            <label asp-for="@Model.Direccion">Direccion: 
-                <input asp-for="@Model.Direccion" placeholder="Ej: Av. Independencia 1900">
-                <span asp-validation-for="@Model.Direccion"></span>
-            </label>
+        <div class="text-center">
+            <h2 class="mb-5">Usuarios en el sistema</h2>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Contraseña</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Eliminar</th>
+                        <th scope="col">Modificar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var usuario in Model)
+                    {
+                        <tr>
+                            <td scope="row">@usuario.Id</td>
+                            <td>@usuario.Nombre</td>
+                            <td>@usuario.User</td>
+                            <td>@usuario.Passwd</td>
+                            <td>@usuario.Rol</td>
+                            <td>
+                                <a href="@Url.Action("BajarUsuario","Usuario", new { id = @usuario.Id} )">
+                                    Eliminar
+                                </a>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("ModificarUsuario","Usuario", new { id = @usuario.Id} )">
+                                    Modificar
+                                </a>     
+                            </td>
+                        </tr>
+                    }
+            </table>
+            <div class="col-md-2 text-center mx-auto my-5">
+                <button  type="button" class="btn btn-outline-dark me-2" width="100%">
+                    <a asp-controller="Usuario" asp-action="CargarUsuario" class="nav-link px-4">Agregar usuario</a>
+                </button>    
+            </div>      
+        </div>
 
-            <label asp-for="@Model.Telefono">Telefono: 
-                <input asp-for="@Model.Telefono" placeholder="Ej: 4256162">
-                <span asp-validation-for="@Model.Telefono"></span>
-            </label>
-
-            <label asp-for="@Model.DatosReferenciaDireccion">Datos de referencia de direccion: 
-                <input asp-for="@Model.DatosReferenciaDireccion" placeholder="Ej: Entre Colon y Alem">
-                <span asp-validation-for="@Model.DatosReferenciaDireccion"></span>
-            </label>
-                    
-            <fieldset>
-                <button type="submit">Enviar</button>
-            </fieldset>
-        </form>
     </div>
         
     <footer class="py-3">

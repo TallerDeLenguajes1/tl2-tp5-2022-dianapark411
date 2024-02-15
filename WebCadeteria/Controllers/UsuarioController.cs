@@ -5,14 +5,14 @@ using WebCadeteria.ViewModels;
 using AutoMapper;
 
 namespace WebCadeteria.Controllers{
-    public class PedidoController : Controller
+    public class UsuarioController : Controller
     {   
         private readonly ILogger<HomeController> _logger;
         
         private readonly IMapper _mapper;
-        private readonly IPedido _repository;
+        private readonly IUsuario _repository;
 
-        public PedidoController(ILogger<HomeController> logger, IMapper mapper, IPedido repository)
+        public UsuarioController(ILogger<HomeController> logger, IMapper mapper, IUsuario repository)
         {
             _logger = logger;
             _mapper = mapper;
@@ -25,14 +25,14 @@ namespace WebCadeteria.Controllers{
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
             if(es_admin()){
-                return View("ListarPedidos", _repository.FindAll());
+                return View("ListarUsuarios", _repository.FindAll());
             }else{
                 return View("../Sesion/ErrorPermisos");
-            }  
+            } 
         }
 
         [HttpGet]
-        public IActionResult AgregarPedido()
+        public IActionResult CargarUsuario()
         {
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
@@ -45,27 +45,26 @@ namespace WebCadeteria.Controllers{
         }
 
         [HttpPost]
-        public IActionResult AgregarPedido(PedidoViewModel _pedidoVM){
-
+        public IActionResult CargarUsuario(CargarUsuarioViewModel _usuarioVM){
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
-            if(ModelState.IsValid){         
+            if(ModelState.IsValid){   
                 if(es_admin()){
-                    Pedido ped = _mapper.Map<Pedido>(_pedidoVM);
-                    _repository.Insert(ped);
+                    Usuario user = _mapper.Map<Usuario>(_usuarioVM);
+                    _repository.Insert(user);
 
                     return RedirectToAction("Index");
                 }else{
                     return View("../Sesion/ErrorPermisos");
-                }
+                }      
             }else{
                 return View();
             }
         }
 
 
-        public IActionResult MostrarPedidos(){
+        public IActionResult MostrarUsuarios(){
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
@@ -77,14 +76,7 @@ namespace WebCadeteria.Controllers{
             }
         }
 
-        public IActionResult MostrarPedidosCadete(int cadete){
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            return View("ListarPedidos", _repository.FindByIdCadete(cadete));
-        }
-
-        public IActionResult BajarPedido(int id){
+        public IActionResult BajarUsuario(int id){
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
@@ -94,40 +86,40 @@ namespace WebCadeteria.Controllers{
                 return RedirectToAction("Index");
             }else{
                 return View("../Sesion/ErrorPermisos");
-            }    
+            }   
         }
 
         [HttpGet]
-        public IActionResult ModificarPedido(int id)
+        public IActionResult ModificarUsuario(int id)
         {   
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
             
             if(es_admin()){
-                Pedido ped = _repository.FindById(id);
-                PedidoViewModel _pedidoVM = _mapper.Map<PedidoViewModel>(ped);
-                return View(_pedidoVM);
+                Usuario user = _repository.FindById(id);
+                ModificarUsuarioViewModel _usuarioVM = _mapper.Map<ModificarUsuarioViewModel>(user);
+                return View(_usuarioVM);
             }else{
                 return View("../Sesion/ErrorPermisos");
-            }    
+            }               
         }
 
         [HttpPost]
-        public IActionResult ModificarPedido(PedidoViewModel _pedidoVM) 
+        public IActionResult ModificarUsuario(ModificarUsuarioViewModel _usuarioVM) 
         {   
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
             if(ModelState.IsValid){
                 if(es_admin()){
-                    Pedido ped = _mapper.Map<Pedido>(_pedidoVM);
-                    _repository.Update(ped);
+                    Usuario user = _mapper.Map<Usuario>(_usuarioVM);
+                    _repository.Update(user);
 
                     return RedirectToAction("Index");
                 }else{
                     return View("../Sesion/ErrorPermisos");
-                }      
+                }   
             }else{
                 return View();
             }
@@ -140,7 +132,6 @@ namespace WebCadeteria.Controllers{
         private bool es_admin(){
             return HttpContext.Session.Keys.Any() && HttpContext.Session.GetString("Rol") == "Administrador";
         }
-
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

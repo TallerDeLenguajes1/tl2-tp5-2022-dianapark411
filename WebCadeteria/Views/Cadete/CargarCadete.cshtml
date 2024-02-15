@@ -4,12 +4,54 @@
 
 @model WebCadeteria.ViewModels.CadeteViewModel
 
-@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor Accessor
 
-@if(Accessor.HttpContext.Session.GetString("Rol") == "Administrador"){
-    
-    <div>
+<div class="container-principal">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <h3 class="col-md-2 text-start"class="navbar-brand">CadeteriaWeb</h3>
+        <nav class="col-md-8">
+            <ul class="menu">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                <li>
+                    <a href="#">Cadete</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Cadete" asp-action="Index">Listar Cadetes</a></li>
+                        <li class="text-center"><a asp-controller="Cadete" asp-action="CargarCadete">Cargar Cadete</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Cliente</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Cliente" asp-action="Index">Listar Clientes</a></li>
+                        <li class="text-center"><a asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Pedido</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
+                        <li class="text-center"><a asp-controller="Pedido" asp-action="AgregarPedido">Cargar Pedido</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Usuario</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Usuario" asp-action="Index">Listar Usuarios</a></li>
+                        <li class="text-center"><a asp-controller="Usuario" asp-action="CargarUsuario">Cargar Usuario</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>    
+
+        <div class="col-md-2 text-end">
+            <button  type="button" class="btn btn-outline-dark me-2" width="100%">
+                <a asp-controller="Sesion" asp-action="Logout" class="nav-link px-4">Cerrar Sesión</a>
+            </button>
+            
+        </div>
+    </header>
+
+    <div class="middle-section">
         <form asp-controller="Cadete" asp-action="CargarCadete" method="post">
             <label asp-for="@Model.Nombre">Nombre:
                 <input asp-for="@Model.Nombre" placeholder="Ingrese el nombre">
@@ -27,16 +69,14 @@
             </label>
 
             <fieldset>
-                <button>Enviar</button>
+                <button type="submit">Enviar</button>
             </fieldset>
         </form>
     </div>
-}
-else{ //usuario es cadete o no se logeo
-    <div class="text-center">   
-        <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
-    </div>  
-}
-
+        
+    <footer class="py-3">
+        <p class="text-center text-body-secondary">© 2022 WebCadeteria</p>
+    </footer>
+</div>
 
 @section Scripts { <partial name = "_ValidationScriptsPartial" /> } 

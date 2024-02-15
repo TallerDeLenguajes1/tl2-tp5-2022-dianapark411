@@ -5,52 +5,98 @@
 @using WebCadeteria.ViewModels
 @model List<CadeteViewModel>
 
+<div class="container-principal">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <h3 class="col-md-2 text-start"class="navbar-brand">CadeteriaWeb</h3>
+        <nav class="col-md-8">
+            <ul class="menu">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                <li>
+                    <a href="#">Cadete</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Cadete" asp-action="Index">Listar Cadetes</a></li>
+                        <li class="text-center"><a asp-controller="Cadete" asp-action="CargarCadete">Cargar Cadete</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Cliente</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Cliente" asp-action="Index">Listar Clientes</a></li>
+                        <li class="text-center"><a asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Pedido</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
+                        <li class="text-center"><a asp-controller="Pedido" asp-action="AgregarPedido">Cargar Pedido</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Usuario</a>
+                    <ul class="submenu">
+                        <li class="text-center"><a asp-controller="Usuario" asp-action="Index">Listar Usuarios</a></li>
+                        <li class="text-center"><a asp-controller="Usuario" asp-action="CargarUsuario">Cargar Usuario</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>    
 
-@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor Accessor
+        <div class="col-md-2 text-end">
+            <button  type="button" class="btn btn-outline-dark me-2" width="100%">
+                <a asp-controller="Sesion" asp-action="Logout" class="nav-link px-4">Cerrar Sesión</a>
+            </button>
+            
+        </div>
+    </header>
 
-@if(Accessor.HttpContext.Session.GetString("Rol") == "Administrador"){  
-    <div class="text-center">
-        <h3 class="Alta"> @Html.ActionLink("Agregar Cadete","CargarCadete","Cadete")</h3>
-        <h2>Cadetes en el sistema</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Direccion</th>
-                    <th>Telefono</th>
-                    <th>Eliminar</th>
-                    <th>Modificar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var cadete in Model)
-                {
+    <div class="middle-section">
+        <div class="text-center">
+            <h2 class="mb-5">Cadetes en el sistema</h2>
+            <table class="table table-bordered table-hover">
+                <thead>
                     <tr>
-                        <td>@cadete.Id</td>
-                        <td>@cadete.Nombre</td>
-                        <td>@cadete.Direccion</td>
-                        <td>@cadete.Telefono</td>
-                        <td>
-                            <a href="@Url.Action("BajarCadete","Cadete", new { id = @cadete.Id } )">
-                                Eliminar
-                            </a>
-                        </td>
-                        <td>
-                            <a href="@Url.Action("ModificarCadete","Cadete", new { id = @cadete.Id } )">
-                                Modificar
-                            </a>     
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Direccion</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Eliminar</th>
+                        <th scope="col">Modificar</th>
                     </tr>
-                }
-        </table>    
+                </thead>
+                <tbody>
+                    @foreach (var cadete in Model)
+                    {
+                        <tr>
+                            <td scope="row">@cadete.Id</td>
+                            <td>@cadete.Nombre</td>
+                            <td>@cadete.Direccion</td>
+                            <td>@cadete.Telefono</td>
+                            <td>
+                                <a href="@Url.Action("BajarCadete","Cadete", new { id = @cadete.Id } )">
+                                    Eliminar
+                                </a>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("ModificarCadete","Cadete", new { id = @cadete.Id } )">
+                                    Modificar
+                                </a>     
+                            </td>
+                        </tr>
+                    }
+            </table>
+            <div class="col-md-2 text-center mx-auto my-5">
+                <button  type="button" class="btn btn-outline-dark me-2" width="100%">
+                    <a asp-controller="Cadete" asp-action="CargarCadete" class="nav-link px-4">Agregar cadete</a>
+                </button>    
+            </div>    
+        </div>
     </div>
-}
-else{ //usuario es cadete o no se logeo
-    <div class="text-center">   
-        <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
-    </div>  
-}
+        
+    <footer class="py-3">
+        <p class="text-center text-body-secondary">© 2022 WebCadeteria</p>
+    </footer>
+</div>
 
 @section Scripts { <partial name = "_ValidationScriptsPartial" /> } 
