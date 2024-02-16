@@ -126,7 +126,7 @@ namespace WebCadeteria.Repositories{
 
         public List<ListarPedidoViewModel> FindByIdCadete(int id_cad){
             List<ListarPedidoViewModel> ListadoPedidosVM = new();
-            string queryString = "SELECT * FROM Pedido WHERE Cadete = @cadete;";
+            string queryString = "SELECT Nro,Obs,Estado,Cliente.Nombre as Cliente,Cadete.Nombre as Cadete from Pedido INNER JOIN Cliente on Cliente=id_cli INNER JOIN Cadete on Cadete=id_cad WHERE Cadete = @cadete;";
             try
             {
                 using (SqliteConnection connection = new SqliteConnection(_connectionString)){

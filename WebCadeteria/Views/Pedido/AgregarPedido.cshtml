@@ -73,7 +73,7 @@
                 <input type="text" class="form-control" asp-for="@Model.Obs" placeholder="Ej: 1 kg de pan">
                 <span asp-validation-for="@Model.Obs"></span>
             </div>
-            <div class="col-md-4">
+            <div class="col-12">
                 <label class="form-label" asp-for="@Model.Estado">Estado:</label>
                 <select id="inputState" class="form-select" asp-for="@Model.Estado">
                     <option selected value="en preparacion">en preparacion</option>
@@ -83,13 +83,27 @@
                 <span asp-validation-for="@Model.Estado"></span>
             </div>
             <div class="col-12">
-                <label class="form-label" asp-for="@Model.Cliente">Id cliente:</label>
-                <input type="text" class="form-control" asp-for="@Model.Cliente" placeholder="Ej: 1">
+                <label class="form-label" asp-for="@Model.Cliente">Cliente:</label>
+                <select class="form-control" asp-for="@Model.Cliente">
+                    @{
+                        foreach (var cliente in ViewBag.ClientesList)
+                        {
+                            <option value="@cliente.Value">@cliente.Text</option>
+                        }
+                    }
+                </select>
                 <span asp-validation-for="@Model.Cliente"></span>
             </div>
             <div class="col-12">
-                <label class="form-label" asp-for="@Model.Cadete">Id cadete:</label>
-                <input type="text" class="form-control" asp-for="@Model.Cadete" placeholder="Ej: 1">
+                <label class="form-label" asp-for="@Model.Cadete">Cadete:</label>
+                <select class="form-control" asp-for="@Model.Cadete">
+                    @{
+                        foreach (var cadete in ViewBag.CadetesList)
+                        {
+                            <option value="@cadete.Value">@cadete.Text</option>
+                        }
+                    }
+                </select>
                 <span asp-validation-for="@Model.Cadete"></span>
             </div>
         

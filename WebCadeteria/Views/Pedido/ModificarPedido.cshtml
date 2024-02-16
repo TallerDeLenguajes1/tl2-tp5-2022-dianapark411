@@ -68,31 +68,61 @@
 
     <div class="middle-section">
         <form class="row g-3" asp-controller="Pedido" asp-action="ModificarPedido" method="post">
-            <div class="col-12">
-                <label class="form-label" asp-for="@Model.Obs">Observacion:</label>
-                <input type="text" class="form-control" asp-for="@Model.Obs" placeholder="Ej: 1 kg de pan">
-                <span asp-validation-for="@Model.Obs"></span>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label" asp-for="@Model.Estado">Estado:</label>
-                <select id="inputState" class="form-select" asp-for="@Model.Estado">
-                    <option selected value="en preparacion">en preparacion</option>
-                    <option value="en camino">en camino</option>
-                    <option value="entregado">entregado</option>
-                </select>
-                <span asp-validation-for="@Model.Estado"></span>
-            </div>
-            <div class="col-12">
-                <label class="form-label" asp-for="@Model.Cliente">Id cliente:</label>
-                <input type="text" class="form-control" asp-for="@Model.Cliente" placeholder="Ej: 1">
-                <span asp-validation-for="@Model.Cliente"></span>
-            </div>
-            <div class="col-12">
-                <label class="form-label" asp-for="@Model.Cadete">Id cadete:</label>
-                <input type="text" class="form-control" asp-for="@Model.Cadete" placeholder="Ej: 1">
-                <span asp-validation-for="@Model.Cadete"></span>
-            </div>
-        
+            <input type="hidden" asp-for="Nro">
+            @{
+                if(rol == "Administrador"){
+                    <div class="col-12">
+                        <label class="form-label" asp-for="@Model.Obs">Observacion:</label>
+                        <input type="text" class="form-control" asp-for="@Model.Obs" placeholder="Ej: 1 kg de pan">
+                        <span asp-validation-for="@Model.Obs"></span>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" asp-for="@Model.Estado">Estado:</label>
+                        <select id="inputState" class="form-select" asp-for="@Model.Estado">
+                            <option selected value="en preparacion">en preparacion</option>
+                            <option value="en camino">en camino</option>
+                            <option value="entregado">entregado</option>
+                        </select>
+                        <span asp-validation-for="@Model.Estado"></span>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" asp-for="@Model.Cliente">Cliente:</label>
+                        <select class="form-control" asp-for="@Model.Cliente">
+                            @{
+                                foreach (var cliente in ViewBag.ClientesList){
+                                    <option value="@cliente.Value">@cliente.Text</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="@Model.Cliente"></span>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" asp-for="@Model.Cadete">Cadete:</label>
+                        <select class="form-control" asp-for="@Model.Cadete">
+                            @{
+                                foreach (var cadete in ViewBag.CadetesList){
+                                    <option value="@cadete.Value">@cadete.Text</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="@Model.Cadete"></span>
+                    </div>
+                }else{
+                    <input type="hidden" class="form-control" asp-for="@Model.Obs">
+                    <div class="col-12">
+                        <label class="form-label" asp-for="@Model.Estado">Estado:</label>
+                        <select id="inputState" class="form-select" asp-for="@Model.Estado">
+                            <option selected value="en preparacion">en preparacion</option>
+                            <option value="en camino">en camino</option>
+                            <option value="entregado">entregado</option>
+                        </select>
+                        <span asp-validation-for="@Model.Estado"></span>
+                    </div>
+                    <input type="hidden" class="form-control" asp-for="@Model.Cliente">
+                    <input type="hidden" class="form-control" asp-for="@Model.Cadete">
+                }
+            }
+ 
             <div class="col-12">
                 <button type="submit" class="btn btn-dark">Enviar</button>
             </div>

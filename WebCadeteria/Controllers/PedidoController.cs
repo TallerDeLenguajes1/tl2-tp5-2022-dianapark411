@@ -4,6 +4,9 @@ using WebCadeteria.Models;
 using WebCadeteria.ViewModels;
 using AutoMapper;
 
+//Agrego para poder usar SelectList para el ViegBag
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace WebCadeteria.Controllers{
     public class PedidoController : Controller
     {   
@@ -11,12 +14,16 @@ namespace WebCadeteria.Controllers{
         
         private readonly IMapper _mapper;
         private readonly IPedido _repository;
+        private readonly ICliente _repository_cliente;
+        private readonly ICadete _repository_cadete;
 
-        public PedidoController(ILogger<HomeController> logger, IMapper mapper, IPedido repository)
+        public PedidoController(ILogger<HomeController> logger, IMapper mapper, IPedido repository, ICliente repository_cliente,ICadete repository_cadete)
         {
             _logger = logger;
             _mapper = mapper;
             _repository = repository;
+            _repository_cliente = repository_cliente;
+            _repository_cadete = repository_cadete;
         }
         
         public IActionResult Index()
@@ -40,6 +47,13 @@ namespace WebCadeteria.Controllers{
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
             if(es_admin()){
+
+                var clientes = _repository_cliente.FindAll();
+                ViewBag.ClientesList = new SelectList(clientes, "Id", "Nombre");
+
+                var cadetes = _repository_cadete.FindAll();
+                ViewBag.CadetesList = new  SelectList(cadetes, "Id", "Nombre");
+
                 return View();
             }else{
                 return View("../Sesion/ErrorPermisos");
@@ -105,8 +119,14 @@ namespace WebCadeteria.Controllers{
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
-            
+
             //Si es Cadete o Admin puede modificar el pedido
+            var clientes = _repository_cliente.FindAll();
+            ViewBag.ClientesList = new SelectList(clientes, "Id", "Nombre");
+
+            var cadetes = _repository_cadete.FindAll();
+            ViewBag.CadetesList = new  SelectList(cadetes, "Id", "Nombre");
+   
             Pedido ped = _repository.FindById(id);
             PedidoViewModel _pedidoVM = _mapper.Map<PedidoViewModel>(ped);
             return View(_pedidoVM);
