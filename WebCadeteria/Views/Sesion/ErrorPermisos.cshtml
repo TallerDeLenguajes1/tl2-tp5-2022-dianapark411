@@ -1,6 +1,12 @@
 @{
     ViewData["Title"] = "ErrorPermisos";
 }
+
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var rol = HttpContextAccessor.HttpContext?.Session.GetString("Rol");
+}
+
 <div class="container-principal">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <h3 class="col-md-2 text-start"class="navbar-brand">CadeteriaWeb</h3>
@@ -8,34 +14,45 @@
             <ul class="menu">
                 <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
-                <li>
-                    <a href="#">Cadete</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Cadete" asp-action="Index">Listar Cadetes</a></li>
-                        <li class="text-center"><a asp-controller="Cadete" asp-action="CargarCadete">Cargar Cadete</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Cliente</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Cliente" asp-action="Index">Listar Clientes</a></li>
-                        <li class="text-center"><a asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Pedido</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
-                        <li class="text-center"><a asp-controller="Pedido" asp-action="AgregarPedido">Cargar Pedido</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Usuario</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Usuario" asp-action="Index">Listar Usuarios</a></li>
-                        <li class="text-center"><a asp-controller="Usuario" asp-action="CargarUsuario">Cargar Usuario</a></li>
-                    </ul>
-                </li>
+                @{
+                    if(rol == "Administrador"){
+                        <li>
+                            <a href="#">Cadete</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Cadete" asp-action="Index">Listar Cadetes</a></li>
+                                <li class="text-center"><a asp-controller="Cadete" asp-action="CargarCadete">Cargar Cadete</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Cliente</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Cliente" asp-action="Index">Listar Clientes</a></li>
+                                <li class="text-center"><a asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Pedido</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
+                                <li class="text-center"><a asp-controller="Pedido" asp-action="AgregarPedido">Cargar Pedido</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Usuario</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Usuario" asp-action="Index">Listar Usuarios</a></li>
+                                <li class="text-center"><a asp-controller="Usuario" asp-action="CargarUsuario">Cargar Usuario</a></li>
+                            </ul>
+                        </li>
+                    }else{
+                        <li>
+                            <a href="#">Pedido</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
+                            </ul>
+                        </li>
+                    }
+                }
             </ul>
         </nav>    
 
@@ -49,10 +66,9 @@
 
     <div class="middle-section">
         <div class="text-center">   
-            <h2>No cuenta con los permisos necesarios para realizar esta acción, comuníquese con el administrador</h2>
-            <h3 class="display-4"> @Html.ActionLink("INICIAR SESION","Index","Sesion")</h3>
-            <h3 class="display-4"> ver como redirigir pag anterior</h3>
-
+            <h2 py-10>No cuenta con los permisos necesarios para realizar esta acción,</h2>
+            <h2 py-10>comuníquese con el administrador</h2>
+            <meta http-equiv="refresh" content="3;url=/Home/Index">
         </div>
     </div>
         

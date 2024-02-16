@@ -15,12 +15,11 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {   
-        
         //Usuario no logueados: Pantalla de logueo
-
         if (!esta_logueado()) {
             return RedirectToRoute(new { controller = "Sesion", action = "Index" });
         }
+              
         return View();
     }
 

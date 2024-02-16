@@ -5,9 +5,6 @@ using WebCadeteria.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 
-//Administrador :ABM y listado de cadetes, Pedidos y Clientes -->
-//Cadete: Listado de pedidos del cadete, y cambio de estado de pedidos del cadete. --> 
-
 namespace WebCadeteria.Controllers{
     public class CadeteController : Controller
     {       
@@ -30,6 +27,8 @@ namespace WebCadeteria.Controllers{
             if(es_admin()){
                 return View("ListarCadetes", _repository.FindAll());
             }else{
+                //TempData ["Message"] = "No cuenta con los permisos necesarios para realizar esta acción, comuníquese con el administrador";
+                //return RedirectToAction("Index", "Home");
                 return View("../Sesion/ErrorPermisos");
             }
         }

@@ -124,8 +124,8 @@ namespace WebCadeteria.Repositories{
         }
 
 
-        public List<PedidoViewModel> FindByIdCadete(int id_cad){
-            List<PedidoViewModel> ListadoPedidosVM = new();
+        public List<ListarPedidoViewModel> FindByIdCadete(int id_cad){
+            List<ListarPedidoViewModel> ListadoPedidosVM = new();
             string queryString = "SELECT * FROM Pedido WHERE Cadete = @cadete;";
             try
             {
@@ -136,7 +136,7 @@ namespace WebCadeteria.Repositories{
                     connection.Open();
                     using(SqliteDataReader reader = command.ExecuteReader()){
                         while(reader.Read()){
-                            ListadoPedidosVM.Add( new PedidoViewModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),reader.GetInt32(3), reader.GetInt32(4)));
+                            ListadoPedidosVM.Add( new ListarPedidoViewModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),reader.GetString(3),reader.GetString(4)));
                         }
                     }
                     connection.Close();

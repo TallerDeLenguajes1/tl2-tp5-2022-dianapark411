@@ -63,7 +63,17 @@ namespace WebCadeteria.Controllers{
                                         HttpContext.Session.SetString("Nombre", reader.GetString(1));
                                         HttpContext.Session.SetString("Usuario", reader.GetString(2));
                                         HttpContext.Session.SetString("Contraseña", reader.GetString(3));
-                                        HttpContext.Session.SetString("Rol", reader.GetString(4));                                      
+                                        HttpContext.Session.SetString("Rol", reader.GetString(4));
+                                        if(HttpContext.Session.GetString("Rol")=="Cadete")
+                                        {
+                                            if(!reader.IsDBNull(5)){
+                                                HttpContext.Session.SetInt32("Id_cadete", reader.GetInt32(5));
+                                            }else{
+                                                HttpContext.Session.SetInt32("Id_cadete", -999);
+                                            }
+                                        }else{
+                                            HttpContext.Session.SetInt32("Id_cadete", -999);
+                                        }                                
                                     }
                                 }else{   
                                     return View("Reintentar");

@@ -5,6 +5,11 @@
 @using WebCadeteria.ViewModels
 @model List<ClienteViewModel>
 
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var rol = HttpContextAccessor.HttpContext?.Session.GetString("Rol");
+}
+
 <div class="container-principal">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <h3 class="col-md-2 text-start"class="navbar-brand">CadeteriaWeb</h3>
@@ -12,34 +17,45 @@
             <ul class="menu">
                 <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
-                <li>
-                    <a href="#">Cadete</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Cadete" asp-action="Index">Listar Cadetes</a></li>
-                        <li class="text-center"><a asp-controller="Cadete" asp-action="CargarCadete">Cargar Cadete</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Cliente</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Cliente" asp-action="Index">Listar Clientes</a></li>
-                        <li class="text-center"><a asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Pedido</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
-                        <li class="text-center"><a asp-controller="Pedido" asp-action="AgregarPedido">Cargar Pedido</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Usuario</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Usuario" asp-action="Index">Listar Usuarios</a></li>
-                        <li class="text-center"><a asp-controller="Usuario" asp-action="CargarUsuario">Cargar Usuario</a></li>
-                    </ul>
-                </li>
+                @{
+                    if(rol == "Administrador"){
+                        <li>
+                            <a href="#">Cadete</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Cadete" asp-action="Index">Listar Cadetes</a></li>
+                                <li class="text-center"><a asp-controller="Cadete" asp-action="CargarCadete">Cargar Cadete</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Cliente</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Cliente" asp-action="Index">Listar Clientes</a></li>
+                                <li class="text-center"><a asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Pedido</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
+                                <li class="text-center"><a asp-controller="Pedido" asp-action="AgregarPedido">Cargar Pedido</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Usuario</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Usuario" asp-action="Index">Listar Usuarios</a></li>
+                                <li class="text-center"><a asp-controller="Usuario" asp-action="CargarUsuario">Cargar Usuario</a></li>
+                            </ul>
+                        </li>
+                    }else{
+                        <li>
+                            <a href="#">Pedido</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
+                            </ul>
+                        </li>
+                    }
+                }
             </ul>
         </nav>    
 
@@ -62,8 +78,12 @@
                         <th scope="col">Direccion</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Ref direccion</th>
-                        <th scope="col">Eliminar</th>
-                        <th scope="col">Modificar</th>
+                        @{
+                            if(rol == "Administrador"){
+                                <th scope="col">Eliminar</th>
+                                <th scope="col">Modificar</th>
+                            }
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -75,16 +95,21 @@
                             <td>@cliente.Direccion</td>
                             <td>@cliente.Telefono</td>
                             <td>@cliente.DatosReferenciaDireccion</td>
-                            <td>
-                                <a href="@Url.Action("BajarCliente","Cliente", new { id = @cliente.Id} )">
-                                    Eliminar
-                                </a>
-                            </td>
-                            <td>
-                                <a href="@Url.Action("ModificarCliente","Cliente", new { id = @cliente.Id} )">
-                                    Modificar
-                                </a>     
-                            </td>
+
+                            @{
+                                if(rol == "Administrador"){
+                                    <td>
+                                        <a href="@Url.Action("BajarCliente","Cliente", new { id = @cliente.Id} )">
+                                            Eliminar
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("ModificarCliente","Cliente", new { id = @cliente.Id} )">
+                                            Modificar
+                                        </a>     
+                                    </td>
+                                }
+                            }
                         </tr>
                     }
             </table> 

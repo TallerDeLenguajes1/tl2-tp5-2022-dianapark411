@@ -25,9 +25,11 @@ namespace WebCadeteria.Controllers{
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
             if(es_admin()){
-                return View("ListarPedidos", _repository.FindAll());
+                return RedirectToAction("MostrarPedidos");
             }else{
-                return View("../Sesion/ErrorPermisos");
+                int id_cadete = (int)HttpContext.Session.GetInt32("Id_cadete");
+                
+                return RedirectToAction("MostrarPedidosCadete", new { cadete = id_cadete});
             }  
         }
 
@@ -71,7 +73,7 @@ namespace WebCadeteria.Controllers{
             }
 
             if(es_admin()){
-                return RedirectToAction("Index"); //para que index pase el viewmodel
+                return View("ListarPedidos", _repository.FindAll());
             }else{
                 return View("../Sesion/ErrorPermisos");
             }
@@ -104,13 +106,10 @@ namespace WebCadeteria.Controllers{
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
             
-            if(es_admin()){
-                Pedido ped = _repository.FindById(id);
-                PedidoViewModel _pedidoVM = _mapper.Map<PedidoViewModel>(ped);
-                return View(_pedidoVM);
-            }else{
-                return View("../Sesion/ErrorPermisos");
-            }    
+            //Si es Cadete o Admin puede modificar el pedido
+            Pedido ped = _repository.FindById(id);
+            PedidoViewModel _pedidoVM = _mapper.Map<PedidoViewModel>(ped);
+            return View(_pedidoVM);
         }
 
         [HttpPost]
@@ -120,14 +119,10 @@ namespace WebCadeteria.Controllers{
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
             if(ModelState.IsValid){
-                if(es_admin()){
-                    Pedido ped = _mapper.Map<Pedido>(_pedidoVM);
-                    _repository.Update(ped);
+                Pedido ped = _mapper.Map<Pedido>(_pedidoVM);
+                _repository.Update(ped);
 
-                    return RedirectToAction("Index");
-                }else{
-                    return View("../Sesion/ErrorPermisos");
-                }      
+                return RedirectToAction("Index");  
             }else{
                 return View();
             }

@@ -3,7 +3,10 @@
 }
 
 @model WebCadeteria.ViewModels.CadeteViewModel
-
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var rol = HttpContextAccessor.HttpContext?.Session.GetString("Rol");
+}
 
 <div class="container-principal">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -52,27 +55,29 @@
     </header>
 
     <div class="middle-section">
-        <form asp-controller="Cadete" asp-action="CargarCadete" method="post">
-            <label asp-for="@Model.Nombre">Nombre:
-                <input asp-for="@Model.Nombre" placeholder="Ingrese el nombre">
+        <form class="row g-3" asp-controller="Cadete" asp-action="CargarCadete" method="post">
+            <div class="col-12">
+                <label class="form-label" asp-for="@Model.Nombre">Nombre</label>
+                <input type="text" class="form-control" asp-for="@Model.Nombre" placeholder="Ingrese el nombre">
                 <span asp-validation-for="@Model.Nombre"></span>
-            </label>
-            
-            <label asp-for="@Model.Direccion">Direccion: 
-                <input asp-for="@Model.Direccion" placeholder="Ej: Av. Independencia 1900">
+            </div>
+            <div class="col-12">
+                <label class="form-label" asp-for="@Model.Direccion">Dirección</label>
+                <input type="text" class="form-control" asp-for="@Model.Direccion" placeholder="Ej: Av. Independencia 1900">
                 <span asp-validation-for="@Model.Direccion"></span>
-            </label>
-
-            <label asp-for="@Model.Telefono">Telefono: 
-                <input asp-for="@Model.Telefono" placeholder="Ej: 4256162">
+            </div>
+            <div class="col-12">
+                <label class="form-label" asp-for="@Model.Telefono">Telefono</label>
+                <input type="text" class="form-control" asp-for="@Model.Telefono" placeholder="Ej: 4256162">
                 <span asp-validation-for="@Model.Telefono"></span>
-            </label>
-
-            <fieldset>
-                <button type="submit">Enviar</button>
-            </fieldset>
+            </div>
+        
+            <div class="col-12">
+                <button type="submit" class="btn btn-dark">Enviar</button>
+            </div>
         </form>
     </div>
+    
         
     <footer class="py-3">
         <p class="text-center text-body-secondary">© 2022 WebCadeteria</p>

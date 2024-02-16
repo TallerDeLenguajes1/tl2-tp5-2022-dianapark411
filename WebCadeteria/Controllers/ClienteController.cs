@@ -28,6 +28,8 @@ namespace WebCadeteria.Controllers{
                 return View("ListarClientes", _repository.FindAll());
             }else{
                 return View("../Sesion/ErrorPermisos");
+                //TempData ["Message"] = "No cuenta con los permisos necesarios para realizar esta acción, comuníquese con el administrador";
+                //return RedirectToAction("Index", "Home");
             }
         }
 

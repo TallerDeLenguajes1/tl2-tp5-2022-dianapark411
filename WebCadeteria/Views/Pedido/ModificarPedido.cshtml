@@ -4,6 +4,11 @@
 
 @model WebCadeteria.ViewModels.PedidoViewModel
 
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var rol = HttpContextAccessor.HttpContext?.Session.GetString("Rol");
+}
+
 <div class="container-principal">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <h3 class="col-md-2 text-start"class="navbar-brand">CadeteriaWeb</h3>
@@ -11,34 +16,45 @@
             <ul class="menu">
                 <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
-                <li>
-                    <a href="#">Cadete</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Cadete" asp-action="Index">Listar Cadetes</a></li>
-                        <li class="text-center"><a asp-controller="Cadete" asp-action="CargarCadete">Cargar Cadete</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Cliente</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Cliente" asp-action="Index">Listar Clientes</a></li>
-                        <li class="text-center"><a asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Pedido</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
-                        <li class="text-center"><a asp-controller="Pedido" asp-action="AgregarPedido">Cargar Pedido</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Usuario</a>
-                    <ul class="submenu">
-                        <li class="text-center"><a asp-controller="Usuario" asp-action="Index">Listar Usuarios</a></li>
-                        <li class="text-center"><a asp-controller="Usuario" asp-action="CargarUsuario">Cargar Usuario</a></li>
-                    </ul>
-                </li>
+                @{
+                    if(rol == "Administrador"){
+                        <li>
+                            <a href="#">Cadete</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Cadete" asp-action="Index">Listar Cadetes</a></li>
+                                <li class="text-center"><a asp-controller="Cadete" asp-action="CargarCadete">Cargar Cadete</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Cliente</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Cliente" asp-action="Index">Listar Clientes</a></li>
+                                <li class="text-center"><a asp-controller="Cliente" asp-action="CargarCliente">Cargar Cliente</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Pedido</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
+                                <li class="text-center"><a asp-controller="Pedido" asp-action="AgregarPedido">Cargar Pedido</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Usuario</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Usuario" asp-action="Index">Listar Usuarios</a></li>
+                                <li class="text-center"><a asp-controller="Usuario" asp-action="CargarUsuario">Cargar Usuario</a></li>
+                            </ul>
+                        </li>
+                    }else{
+                        <li>
+                            <a href="#">Pedido</a>
+                            <ul class="submenu">
+                                <li class="text-center"><a asp-controller="Pedido" asp-action="Index">Listar Pedidos</a></li>
+                            </ul>
+                        </li>
+                    }
+                }
             </ul>
         </nav>    
 
@@ -51,37 +67,35 @@
     </header>
 
     <div class="middle-section">
-        <form asp-controller="Pedido" asp-action="ModificarPedido" method="post">
-
-            <input type="hidden" asp-for="@Model.Nro"/>
-
-            <label asp-for="@Model.Obs">Observacion: 
-                <input asp-for="@Model.Obs" placeholder="Ingrese observacion: ">
+        <form class="row g-3" asp-controller="Pedido" asp-action="ModificarPedido" method="post">
+            <div class="col-12">
+                <label class="form-label" asp-for="@Model.Obs">Observacion:</label>
+                <input type="text" class="form-control" asp-for="@Model.Obs" placeholder="Ej: 1 kg de pan">
                 <span asp-validation-for="@Model.Obs"></span>
-            </label>
-
-            <label asp-for="@Model.Estado">Estado: 
-                <select asp-for="@Model.Estado">
-                    <option value="en preparacion">en preparacion</option>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" asp-for="@Model.Estado">Estado:</label>
+                <select id="inputState" class="form-select" asp-for="@Model.Estado">
+                    <option selected value="en preparacion">en preparacion</option>
                     <option value="en camino">en camino</option>
                     <option value="entregado">entregado</option>
                 </select>
                 <span asp-validation-for="@Model.Estado"></span>
-            </label>
-
-            <label asp-for="@Model.Cliente">Id cliente: 
-                <input asp-for="@Model.Cliente" placeholder="Ej: 1">
+            </div>
+            <div class="col-12">
+                <label class="form-label" asp-for="@Model.Cliente">Id cliente:</label>
+                <input type="text" class="form-control" asp-for="@Model.Cliente" placeholder="Ej: 1">
                 <span asp-validation-for="@Model.Cliente"></span>
-            </label>
-
-            <label asp-for="@Model.Cadete">Id cadete: 
-                <input asp-for="@Model.Cadete" placeholder="Ej: 1">
+            </div>
+            <div class="col-12">
+                <label class="form-label" asp-for="@Model.Cadete">Id cadete:</label>
+                <input type="text" class="form-control" asp-for="@Model.Cadete" placeholder="Ej: 1">
                 <span asp-validation-for="@Model.Cadete"></span>
-            </label>
-
-            <fieldset>
-                <button type="submit">Modificar</button>
-            </fieldset>
+            </div>
+        
+            <div class="col-12">
+                <button type="submit" class="btn btn-dark">Enviar</button>
+            </div>
         </form>
     </div>
         
