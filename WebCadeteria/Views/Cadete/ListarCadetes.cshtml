@@ -96,12 +96,13 @@
                             @{
                                 if(rol == "Administrador"){
                                     <td>
-                                        <a href="@Url.Action("BajarCadete","Cadete", new { id = @cadete.Id } )">
-                                            Eliminar
-                                        </a>
+                                        <form method="post" action="@Url.Action("BajarCadete", "Cadete", new { id = @cadete.Id })">
+                                            <button type="submit" class="btn btn-link text-decoration-underline border-0">Eliminar</button>
+                                        </form>
+
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("ModificarCadete","Cadete", new { id = @cadete.Id } )">
+                                        <a class="btn btn-link text-decoration-underline border-0" href="@Url.Action("ModificarCadete","Cadete", new { id = @cadete.Id } )">
                                             Modificar
                                         </a>     
                                     </td>

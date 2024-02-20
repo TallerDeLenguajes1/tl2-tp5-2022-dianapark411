@@ -66,7 +66,7 @@ namespace WebCadeteria.Controllers{
                                         HttpContext.Session.SetString("Rol", reader.GetString(4));
                                         if(HttpContext.Session.GetString("Rol")=="Cadete")
                                         {
-                                            if(!reader.IsDBNull(5)){
+                                            if(!reader.IsDBNull(5)){ // El usuario está asignado a un cadete
                                                 HttpContext.Session.SetInt32("Id_cadete", reader.GetInt32(5));
                                             }else{
                                                 HttpContext.Session.SetInt32("Id_cadete", -999);

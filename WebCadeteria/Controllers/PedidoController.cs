@@ -47,7 +47,9 @@ namespace WebCadeteria.Controllers{
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
             }
             if(es_admin()){
-
+                
+                //Uso ViewBags para pasarle a la View tanto el Id como el nombre de los clientes y cadetes
+                //En la vista se usarán para desplegar los clientes y cadetes disponibles para elegir a la hora de cargar un pedido
                 var clientes = _repository_cliente.FindAll();
                 ViewBag.ClientesList = new SelectList(clientes, "Id", "Nombre");
 
@@ -80,7 +82,7 @@ namespace WebCadeteria.Controllers{
             }
         }
 
-
+        [HttpGet]
         public IActionResult MostrarPedidos(){
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
@@ -93,6 +95,7 @@ namespace WebCadeteria.Controllers{
             }
         }
 
+        [HttpGet]
         public IActionResult MostrarPedidosCadete(int cadete){
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
@@ -100,6 +103,7 @@ namespace WebCadeteria.Controllers{
             return View("ListarPedidos", _repository.FindByIdCadete(cadete));
         }
 
+        [HttpPost]
         public IActionResult BajarPedido(int id){
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });

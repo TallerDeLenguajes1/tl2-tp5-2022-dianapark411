@@ -63,19 +63,7 @@ namespace WebCadeteria.Controllers{
             }
         }
 
-
-        public IActionResult MostrarUsuarios(){
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-
-            if(es_admin()){
-                return RedirectToAction("Index"); //para que index pase el viewmodel
-            }else{
-                return View("../Sesion/ErrorPermisos");
-            }
-        }
-
+        [HttpPost]
         public IActionResult BajarUsuario(int id){
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
@@ -122,6 +110,19 @@ namespace WebCadeteria.Controllers{
                 }   
             }else{
                 return View();
+            }
+        }
+          
+        [HttpGet]
+        public IActionResult MostrarUsuarios(){
+            if (!esta_logueado()) {
+                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+            }
+
+            if(es_admin()){
+                return RedirectToAction("Index"); //para que index pase el viewmodel
+            }else{
+                return View("../Sesion/ErrorPermisos");
             }
         }
 

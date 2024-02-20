@@ -25,8 +25,6 @@ namespace WebCadeteria.Mapper{
             CreateMap<ModificarUsuarioViewModel, Usuario>();
             CreateMap<Usuario, ModificarUsuarioViewModel>();
 
-
-
         }
     }
 }

@@ -1,9 +1,10 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using WebCadeteria.Models;
 using AutoMapper;
-using WebCadeteria.ViewModels;
 using System.Text;
+using WebCadeteria.Models;
+using WebCadeteria.ViewModels;
+
 
 namespace WebCadeteria.Controllers{
     public class ClienteController : Controller
@@ -65,21 +66,8 @@ namespace WebCadeteria.Controllers{
                 return View();
             }
         }
-
-        public IActionResult MostrarClientes()
-        {
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-
-            if(es_admin()){
-                return RedirectToAction("Index"); //para que index pase el viewmodel
-            }else{
-                return View("../Sesion/ErrorPermisos");
-            }
-        }
         
-
+        [HttpPost]
         public IActionResult BajarCliente(int id){
             if (!esta_logueado()) {
                 return RedirectToRoute(new { controller = "Sesion", action = "Index" });
@@ -131,6 +119,20 @@ namespace WebCadeteria.Controllers{
             }
         }
 
+        [HttpGet]
+        public IActionResult MostrarClientes()
+        {
+            if (!esta_logueado()) {
+                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+            }
+
+            if(es_admin()){
+                return RedirectToAction("Index"); //para que index pase el viewmodel
+            }else{
+                return View("../Sesion/ErrorPermisos");
+            }
+        }
+        
         [HttpGet]
         public IActionResult BuscarCliente(int id)
         {   
