@@ -73,7 +73,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        
                         <th scope="col">Nombre</th>
                         <th scope="col">Direccion</th>
                         <th scope="col">Telefono</th>
@@ -89,8 +89,7 @@
                     @foreach (var cadete in Model)
                     {
                         <tr>
-                            <td scope="row">@cadete.Id</td>
-                            <td>@cadete.Nombre</td>
+                            <td scope="row">@cadete.Nombre</td>
                             <td>@cadete.Direccion</td>
                             <td>@cadete.Telefono</td>
                             @{

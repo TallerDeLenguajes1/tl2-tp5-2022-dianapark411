@@ -73,10 +73,8 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Usuario</th>
-                        <th scope="col">Contraseña</th>
                         <th scope="col">Rol</th>
                         @{
                             if(rol == "Administrador"){
@@ -90,10 +88,8 @@
                     @foreach (var usuario in Model)
                     {
                         <tr>
-                            <td scope="row">@usuario.Id</td>
-                            <td>@usuario.Nombre</td>
+                            <td scope="row">@usuario.Nombre</td>
                             <td>@usuario.User</td>
-                            <td>@usuario.Passwd</td>
                             <td>@usuario.Rol</td>
                             @{
                                 if(rol == "Administrador"){

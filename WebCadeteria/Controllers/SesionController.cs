@@ -11,13 +11,16 @@ using AutoMapper;
 namespace WebCadeteria.Controllers{
     public class SesionController : Controller
     {
+        private readonly ILogger<SesionController> _logger;
+
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly string _connectionString;
 
 
-        public SesionController(IConfiguration configuration, IMapper mapper)
+        public SesionController(ILogger<SesionController> logger, IConfiguration configuration, IMapper mapper)
         {
+            _logger = logger;
             _configuration = configuration;
             _mapper = mapper;
             _connectionString = _configuration.GetConnectionString("ConnectionString");
@@ -81,10 +84,10 @@ namespace WebCadeteria.Controllers{
                             }
                             connection.Close();
                         }
-                    }catch{
-                        throw;
-                    }
-                    
+                    }catch (Exception ex){
+                        _logger.LogError(ex.ToString());
+                        return RedirectToAction("Error");
+                    } 
                 }
                 return View("../Home/Index");
             }else{
@@ -94,8 +97,13 @@ namespace WebCadeteria.Controllers{
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();
-            return RedirectToRoute(new { controller = "Home", action = "Index" });
+            try{
+                HttpContext.Session.Clear();
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            } 
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

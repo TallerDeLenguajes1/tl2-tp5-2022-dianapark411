@@ -1,10 +1,12 @@
 using WebCadeteria.Models;
 using WebCadeteria.ViewModels;
 using Microsoft.Data.Sqlite;
+using NLog;
 
 namespace WebCadeteria.Repositories{
     public class PedidoRepositorio: IPedido
     {
+        protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IConfiguration _configuration;
 
         private readonly string _connectionString;
@@ -34,8 +36,8 @@ namespace WebCadeteria.Repositories{
                     }
                     connection.Close();
                 }
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al buscar el pedido.");
             }
             return ped;
         }
@@ -56,8 +58,8 @@ namespace WebCadeteria.Repositories{
                     }
                     connection.Close();
                 }
-            }catch{   
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al buscar los pedidos.");
             }
 
             return ListadoPedidosVM;
@@ -78,8 +80,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al insertar el pedido.");
             }
         }
 
@@ -101,8 +103,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al actualizar el pedido.");
             }
         }
 
@@ -118,8 +120,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al eliminar el pedido.");
             }
         }
 
@@ -141,8 +143,8 @@ namespace WebCadeteria.Repositories{
                     }
                     connection.Close();
                 }
-            }catch{   
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al buscar los pedidos del cadete.");
             }
 
             return ListadoPedidosVM;

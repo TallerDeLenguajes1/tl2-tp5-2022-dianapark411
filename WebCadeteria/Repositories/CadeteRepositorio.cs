@@ -1,10 +1,12 @@
 using WebCadeteria.Models;
 using WebCadeteria.ViewModels;
 using Microsoft.Data.Sqlite;
+using NLog;
 
 namespace WebCadeteria.Repositories{
     public class CadeteRepositorio: ICadete
     {
+        protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IConfiguration _configuration;
 
         private readonly string _connectionString;
@@ -38,8 +40,8 @@ namespace WebCadeteria.Repositories{
 
                     connection.Close();
                 }
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al buscar el cadete. ");
             }
             return cad;
         }
@@ -59,8 +61,8 @@ namespace WebCadeteria.Repositories{
                     }
                     connection.Close();
                 }
-            }catch{   
-                throw;
+            }catch(Exception ex){   
+                Logger.Error(ex.Message,"Error al buscar los cadetes.");
             }
 
             return ListadoCadetesVM;
@@ -80,8 +82,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al insertar el cadete.");
             }
         }
 
@@ -100,8 +102,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al actualizar el cadete.");
             }
         }
 
@@ -117,8 +119,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al eliminar el cadete.");
             }
         }
     }

@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Http;
 namespace WebCadeteria.Controllers{
     public class CadeteController : Controller
     {       
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<CadeteController> _logger;
         private readonly IMapper _mapper;
         private readonly ICadete _repository;
 
-        public CadeteController(ILogger<HomeController> logger, IMapper mapper, ICadete repository)
+        public CadeteController(ILogger<CadeteController> logger, IMapper mapper, ICadete repository)
         {
             _logger = logger;
             _mapper = mapper;
@@ -21,129 +21,167 @@ namespace WebCadeteria.Controllers{
 
         public IActionResult Index()
         {   
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            if(es_admin()){
-                return View("ListarCadetes", _repository.FindAll());
-            }else{
-                //TempData ["Message"] = "No cuenta con los permisos necesarios para realizar esta acción, comuníquese con el administrador";
-                //return RedirectToAction("Index", "Home");
-                return View("../Sesion/ErrorPermisos");
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
+                if(es_admin()){
+                    return View("ListarCadetes", _repository.FindAll());
+                }else{
+                    //TempData ["Message"] = "No cuenta con los permisos necesarios para realizar esta acción, comuníquese con el administrador";
+                    //return RedirectToAction("Index", "Home");
+                    return View("../Sesion/ErrorPermisos");
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
             }
         }
 
         [HttpGet]
         public IActionResult CargarCadete()
         {
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            if(es_admin()){
-                return View();
-            }else{
-                return View("../Sesion/ErrorPermisos");
-            }
-            
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
+                if(es_admin()){
+                    return View();
+                }else{
+                    return View("../Sesion/ErrorPermisos");
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }  
         }
 
         [HttpPost]
         public IActionResult CargarCadete(CadeteViewModel _cadeteVM)
         {
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            if(ModelState.IsValid){
-                if(es_admin()){
-                    Cadete cad = _mapper.Map<Cadete>(_cadeteVM);
-                    _repository.Insert(cad);
-
-                    return RedirectToAction("Index");
-                }else{
-                    return View("../Sesion/ErrorPermisos");
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
                 }
-            }else{
-                return View();
-            }  
+                if(ModelState.IsValid){
+                    if(es_admin()){
+                        Cadete cad = _mapper.Map<Cadete>(_cadeteVM);
+                        _repository.Insert(cad);
+
+                        return RedirectToAction("Index");
+                    }else{
+                        return View("../Sesion/ErrorPermisos");
+                    }
+                }else{
+                    return View();
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }   
         }
 
         [HttpPost]
         public IActionResult BajarCadete(int id){
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
 
-            if(es_admin()){
-                _repository.Delete(id);
-                return RedirectToAction("Index");
-            }else{
-                return View("../Sesion/ErrorPermisos");
-            }    
+                if(es_admin()){
+                    _repository.Delete(id);
+                    return RedirectToAction("Index");
+                }else{
+                    return View("../Sesion/ErrorPermisos");
+                }    
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            } 
         }
 
         [HttpGet]
         public IActionResult ModificarCadete(int id)
         {   
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            
-            if(es_admin()){
-                Cadete cad = _repository.FindById(id);
-                CadeteViewModel _cadeteVM = _mapper.Map<CadeteViewModel>(cad);
-                return View(_cadeteVM);
-            }else{
-                return View("../Sesion/ErrorPermisos");
-            }   
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
+                
+                if(es_admin()){
+                    Cadete cad = _repository.FindById(id);
+                    CadeteViewModel _cadeteVM = _mapper.Map<CadeteViewModel>(cad);
+                    return View(_cadeteVM);
+                }else{
+                    return View("../Sesion/ErrorPermisos");
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }  
         }
 
         [HttpPost]
         public IActionResult ModificarCadete(CadeteViewModel _cadeteVM)
         {
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
 
-            if(ModelState.IsValid){
-                if(es_admin()){
-                    
-                    Cadete cad = _mapper.Map<Cadete>(_cadeteVM);
-                    _repository.Update(cad);
+                if(ModelState.IsValid){
+                    if(es_admin()){
+                        
+                        Cadete cad = _mapper.Map<Cadete>(_cadeteVM);
+                        _repository.Update(cad);
 
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }else{
+                        return View("../Sesion/ErrorPermisos");
+                    }       
                 }else{
-                    return View("../Sesion/ErrorPermisos");
-                }       
-            }else{
-                return View();
-            }
+                    return View();
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }   
         }
 
         
         [HttpGet]
         public IActionResult MostrarCadetes(){
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
 
-            if(es_admin()){
-                return RedirectToAction("Index"); //para que index pase el viewmodel
-            }else{
-                return View("../Sesion/ErrorPermisos");
-            }
-            
+                if(es_admin()){
+                    return RedirectToAction("Index"); //para que index pase el viewmodel
+                }else{
+                    return View("../Sesion/ErrorPermisos");
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }  
         }
 
         [HttpGet]
         public IActionResult BuscarCadete(int id)
         {   
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
 
-            Cadete cad = _repository.FindById(id);
-            CadeteViewModel _cadVM = _mapper.Map<CadeteViewModel>(cad);
-            return View(_cadVM);
+                Cadete cad = _repository.FindById(id);
+                CadeteViewModel _cadVM = _mapper.Map<CadeteViewModel>(cad);
+                return View(_cadVM);
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }   
         }
 
 

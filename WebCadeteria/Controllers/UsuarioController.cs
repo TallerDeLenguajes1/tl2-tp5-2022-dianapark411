@@ -7,12 +7,12 @@ using AutoMapper;
 namespace WebCadeteria.Controllers{
     public class UsuarioController : Controller
     {   
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<UsuarioController> _logger;
         
         private readonly IMapper _mapper;
         private readonly IUsuario _repository;
 
-        public UsuarioController(ILogger<HomeController> logger, IMapper mapper, IUsuario repository)
+        public UsuarioController(ILogger<UsuarioController> logger, IMapper mapper, IUsuario repository)
         {
             _logger = logger;
             _mapper = mapper;
@@ -21,109 +21,144 @@ namespace WebCadeteria.Controllers{
         
         public IActionResult Index()
         {   
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            if(es_admin()){
-                return View("ListarUsuarios", _repository.FindAll());
-            }else{
-                return View("../Sesion/ErrorPermisos");
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
+                if(es_admin()){
+                    return View("ListarUsuarios", _repository.FindAll());
+                }else{
+                    return View("../Sesion/ErrorPermisos");
+                } 
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
             } 
         }
 
         [HttpGet]
         public IActionResult CargarUsuario()
         {
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            if(es_admin()){
-                return View();
-            }else{
-                return View("../Sesion/ErrorPermisos");
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
+                if(es_admin()){
+                    return View();
+                }else{
+                    return View("../Sesion/ErrorPermisos");
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
             }
         }
 
         [HttpPost]
         public IActionResult CargarUsuario(CargarUsuarioViewModel _usuarioVM){
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            if(ModelState.IsValid){   
-                if(es_admin()){
-                    Usuario user = _mapper.Map<Usuario>(_usuarioVM);
-                    _repository.Insert(user);
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
+                if(ModelState.IsValid){   
+                    if(es_admin()){
+                        Usuario user = _mapper.Map<Usuario>(_usuarioVM);
+                        _repository.Insert(user);
 
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }else{
+                        return View("../Sesion/ErrorPermisos");
+                    }      
                 }else{
-                    return View("../Sesion/ErrorPermisos");
-                }      
-            }else{
-                return View();
-            }
+                    return View();
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }    
         }
 
         [HttpPost]
         public IActionResult BajarUsuario(int id){
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
 
-            if(es_admin()){
-                _repository.Delete(id);
-                return RedirectToAction("Index");
-            }else{
-                return View("../Sesion/ErrorPermisos");
+                if(es_admin()){
+                    _repository.Delete(id);
+                    return RedirectToAction("Index");
+                }else{
+                    return View("../Sesion/ErrorPermisos");
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
             }   
         }
 
         [HttpGet]
         public IActionResult ModificarUsuario(int id)
         {   
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            
-            if(es_admin()){
-                Usuario user = _repository.FindById(id);
-                ModificarUsuarioViewModel _usuarioVM = _mapper.Map<ModificarUsuarioViewModel>(user);
-                return View(_usuarioVM);
-            }else{
-                return View("../Sesion/ErrorPermisos");
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
+                
+                if(es_admin()){
+                    Usuario user = _repository.FindById(id);
+                    ModificarUsuarioViewModel _usuarioVM = _mapper.Map<ModificarUsuarioViewModel>(user);
+                    return View(_usuarioVM);
+                }else{
+                    return View("../Sesion/ErrorPermisos");
+                } 
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
             }               
         }
 
         [HttpPost]
         public IActionResult ModificarUsuario(ModificarUsuarioViewModel _usuarioVM) 
         {   
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
-            if(ModelState.IsValid){
-                if(es_admin()){
-                    Usuario user = _mapper.Map<Usuario>(_usuarioVM);
-                    _repository.Update(user);
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
+                if(ModelState.IsValid){
+                    if(es_admin()){
+                        Usuario user = _mapper.Map<Usuario>(_usuarioVM);
+                        _repository.Update(user);
 
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }else{
+                        return View("../Sesion/ErrorPermisos");
+                    }   
                 }else{
-                    return View("../Sesion/ErrorPermisos");
-                }   
-            }else{
-                return View();
+                    return View();
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
             }
         }
           
         [HttpGet]
         public IActionResult MostrarUsuarios(){
-            if (!esta_logueado()) {
-                return RedirectToRoute(new { controller = "Sesion", action = "Index" });
-            }
+            try{
+                if (!esta_logueado()) {
+                    return RedirectToRoute(new { controller = "Sesion", action = "Index" });
+                }
 
-            if(es_admin()){
-                return RedirectToAction("Index"); //para que index pase el viewmodel
-            }else{
-                return View("../Sesion/ErrorPermisos");
-            }
+                if(es_admin()){
+                    return RedirectToAction("Index"); //para que index pase el viewmodel
+                }else{
+                    return View("../Sesion/ErrorPermisos");
+                }
+            }catch (Exception ex){
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            } 
         }
 
         private bool esta_logueado(){

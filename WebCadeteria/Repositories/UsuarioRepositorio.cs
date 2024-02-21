@@ -1,10 +1,12 @@
 using WebCadeteria.Models;
 using WebCadeteria.ViewModels;
 using Microsoft.Data.Sqlite;
+using NLog;
 
 namespace WebCadeteria.Repositories{
     public class UsuarioRepositorio: IUsuario
     {
+        protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IConfiguration _configuration;
 
         private readonly string _connectionString;
@@ -34,8 +36,8 @@ namespace WebCadeteria.Repositories{
                     }
                     connection.Close();
                 }
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al buscar el usuario.");
             }
             return user;
         }
@@ -59,8 +61,8 @@ namespace WebCadeteria.Repositories{
                     }
                     connection.Close();
                 }
-            }catch{   
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al buscar los usuarios.");
             }
             return ListadoUsuariosVM;
         }
@@ -80,8 +82,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al insertar el usuario.");
             }
         }
 
@@ -101,8 +103,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al actualizar el usuario.");
             }
         }
 
@@ -118,8 +120,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al eliminar el usuario.");
             }
         }
 

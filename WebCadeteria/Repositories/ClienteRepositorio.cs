@@ -1,10 +1,12 @@
 using WebCadeteria.Models;
 using WebCadeteria.ViewModels;
 using Microsoft.Data.Sqlite;
+using NLog;
 
 namespace WebCadeteria.Repositories{
     public class ClienteRepositorio: ICliente
     {
+        protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IConfiguration _configuration;
 
         private readonly string _connectionString;
@@ -34,8 +36,8 @@ namespace WebCadeteria.Repositories{
                     }
                     connection.Close();
                 }
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al buscar el cliente.");
             }
             return cli;
         }
@@ -55,8 +57,8 @@ namespace WebCadeteria.Repositories{
                     }
                     connection.Close();
                 }
-            }catch{   
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al buscar los clientes.");
             }
 
             return ListadoClientesVM;
@@ -77,8 +79,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al insertar el cliente.");
             }
         }
 
@@ -98,8 +100,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al actualizar el cliente.");
             }
         }
 
@@ -115,8 +117,8 @@ namespace WebCadeteria.Repositories{
                     command.ExecuteNonQuery();
                     connection.Close();
                 }       
-            }catch{
-                throw;
+            }catch(Exception ex){
+                Logger.Error(ex.Message, "Error al eliminar el cliente.");
             }
         }
     }
