@@ -41,8 +41,8 @@ namespace WebCadeteria.Repositories{
             }
             return cli;
         }
-        public List<ClienteViewModel> FindAll(){
-            List<ClienteViewModel> ListadoClientesVM = new();
+        public List<ListarClienteViewModel> FindAll(){
+            List<ListarClienteViewModel> ListadoClientesVM = new();
             string queryString = "SELECT * FROM Cliente;";
             try
             {
@@ -52,7 +52,7 @@ namespace WebCadeteria.Repositories{
                     connection.Open();
                     using(SqliteDataReader reader = command.ExecuteReader()){
                         while(reader.Read()){
-                            ListadoClientesVM.Add( new ClienteViewModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), Convert.ToInt64(reader.GetString(3)), reader.GetString(4)));
+                            ListadoClientesVM.Add( new ListarClienteViewModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), Convert.ToInt64(reader.GetString(3)), reader.GetString(4)));
                         }
                     }
                     connection.Close();

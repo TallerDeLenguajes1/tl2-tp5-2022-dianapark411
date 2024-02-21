@@ -45,8 +45,8 @@ namespace WebCadeteria.Repositories{
             }
             return cad;
         }
-        public List<CadeteViewModel> FindAll(){
-            List<CadeteViewModel> ListadoCadetesVM = new();
+        public List<ListarCadeteViewModel> FindAll(){
+            List<ListarCadeteViewModel> ListadoCadetesVM = new();
             string queryString = "SELECT * FROM Cadete;";
             try
             {
@@ -56,7 +56,7 @@ namespace WebCadeteria.Repositories{
                     connection.Open();
                     using(SqliteDataReader reader = command.ExecuteReader()){
                         while(reader.Read()){
-                            ListadoCadetesVM.Add( new CadeteViewModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), Convert.ToInt64(reader.GetString(3))));
+                            ListadoCadetesVM.Add( new ListarCadeteViewModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), Convert.ToInt64(reader.GetString(3))));
                         }
                     }
                     connection.Close();

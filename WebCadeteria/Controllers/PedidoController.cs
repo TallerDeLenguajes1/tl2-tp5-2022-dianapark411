@@ -73,7 +73,7 @@ namespace WebCadeteria.Controllers{
         }
 
         [HttpPost]
-        public IActionResult AgregarPedido(PedidoViewModel _pedidoVM){
+        public IActionResult AgregarPedido(AgregarPedidoViewModel _pedidoVM){
             try{
                 if (!esta_logueado()) {
                     return RedirectToRoute(new { controller = "Sesion", action = "Index" });
@@ -162,7 +162,7 @@ namespace WebCadeteria.Controllers{
                 ViewBag.CadetesList = new  SelectList(cadetes, "Id", "Nombre");
     
                 Pedido ped = _repository.FindById(id);
-                PedidoViewModel _pedidoVM = _mapper.Map<PedidoViewModel>(ped);
+                ModificarPedidoViewModel _pedidoVM = _mapper.Map<ModificarPedidoViewModel>(ped);
                 return View(_pedidoVM);
             }catch (Exception ex){
                 _logger.LogError(ex.ToString());
@@ -171,7 +171,7 @@ namespace WebCadeteria.Controllers{
         }
 
         [HttpPost]
-        public IActionResult ModificarPedido(PedidoViewModel _pedidoVM) 
+        public IActionResult ModificarPedido(ModificarPedidoViewModel _pedidoVM) 
         {   
             try{
                 if (!esta_logueado()) {

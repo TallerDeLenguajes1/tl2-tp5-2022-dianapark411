@@ -2,7 +2,7 @@
     ViewData["Title"] = "Cargar cadete";
 }
 
-@model WebCadeteria.ViewModels.CadeteViewModel
+@model WebCadeteria.ViewModels.CargarCadeteViewModel
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     var rol = HttpContextAccessor.HttpContext?.Session.GetString("Rol");

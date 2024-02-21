@@ -58,7 +58,7 @@ namespace WebCadeteria.Controllers{
         }
         
         [HttpPost]
-        public IActionResult CargarCliente(ClienteViewModel _clienteVM)
+        public IActionResult CargarCliente(CargarClienteViewModel _clienteVM)
         {
             try{
                 if (!esta_logueado()) {
@@ -111,7 +111,7 @@ namespace WebCadeteria.Controllers{
                 
                 if(es_admin()){
                     Cliente cli = _repository.FindById(id);
-                    ClienteViewModel _clienteVM = _mapper.Map<ClienteViewModel>(cli);
+                    ModificarClienteViewModel _clienteVM = _mapper.Map<ModificarClienteViewModel>(cli);
                     return View(_clienteVM);
                 }else{
                     return View("../Sesion/ErrorPermisos");
@@ -123,7 +123,7 @@ namespace WebCadeteria.Controllers{
         }
 
         [HttpPost]
-        public IActionResult ModificarCliente(ClienteViewModel _clienteVM)
+        public IActionResult ModificarCliente(ModificarClienteViewModel _clienteVM)
         {
             try{
                 if (!esta_logueado()) {

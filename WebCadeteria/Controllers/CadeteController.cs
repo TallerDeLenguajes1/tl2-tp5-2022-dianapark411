@@ -57,7 +57,7 @@ namespace WebCadeteria.Controllers{
         }
 
         [HttpPost]
-        public IActionResult CargarCadete(CadeteViewModel _cadeteVM)
+        public IActionResult CargarCadete(CargarCadeteViewModel _cadeteVM)
         {
             try{
                 if (!esta_logueado()) {
@@ -110,7 +110,7 @@ namespace WebCadeteria.Controllers{
                 
                 if(es_admin()){
                     Cadete cad = _repository.FindById(id);
-                    CadeteViewModel _cadeteVM = _mapper.Map<CadeteViewModel>(cad);
+                    ModificarCadeteViewModel _cadeteVM = _mapper.Map<ModificarCadeteViewModel>(cad);
                     return View(_cadeteVM);
                 }else{
                     return View("../Sesion/ErrorPermisos");
@@ -122,7 +122,7 @@ namespace WebCadeteria.Controllers{
         }
 
         [HttpPost]
-        public IActionResult ModificarCadete(CadeteViewModel _cadeteVM)
+        public IActionResult ModificarCadete(ModificarCadeteViewModel _cadeteVM)
         {
             try{
                 if (!esta_logueado()) {
